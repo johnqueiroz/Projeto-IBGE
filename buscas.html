@@ -1,0 +1,193 @@
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+             <title>Sistemas de arquivo IBGE</title>
+             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+             <link rel="stylesheet" href="estilo.css" type="text/css">
+
+
+             <link rel="icon" type="imagem/png" href="favicon-96x96.png" />
+
+    </head>
+
+<body>
+        <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+                    
+
+            <a class="navbar-brand" href="buscas.html" style="color: aliceblue;" >Sistema de Controle de Equipamento</a>
+
+            <div class= "collapse navbar-collapse" id="navbarSite">
+              <ul class="navbar-nav ml-auto">
+      
+
+                  
+                   
+                <li class="nav-item">
+                  <a class="nav-link" href="buscas.html" style="color: aliceblue;">Busca</a>
+              </li>
+                  <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Contato
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <button class="dropdown-item" type="button">(83)9 998341257</button>
+                                <button class="dropdown-item" type="button">(83)9 996112880</button>
+                                <button class="dropdown-item" type="button" href="#">Central de atendimento </button>
+                              </div>
+                              
+                            </div>
+                            <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gerenciamento
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <a href="gerenciamento_equipamento.php">    <input type="submit" value="Equipamentos" class="dropdown-item"></a>
+                 
+                                <a href="gerenciamento_localidade.php">  <input type="submit" value="Localidades" class="dropdown-item"></a>
+  
+                                <a href="gerenciamento_coordenadores.php">    <input type="submit" value="Coordenadores" class="dropdown-item"></a>
+                              
+                              
+                              </div>
+                              </div>
+                            <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Cadastros
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                              <a href="cadastroEquipamentos.php">    <button class="dropdown-item" type="button">Equipamentos</button></a>
+                              <a href="cadastroLocalidade.php">  <button class="dropdown-item" type="button">Localidades</button></a>
+                              <a href="CadastroServidor.php">    <button class="dropdown-item" type="button" >Servidores</button></a>
+                           
+                            
+                            </div>
+                            </div>
+                          <li class="nav-item">
+                            <a class="nav-link" href="index.php" style="color: aliceblue;">Sair</a>
+                        </li>
+              </ul>
+
+          </div>
+
+         
+
+       
+       
+
+      </nav>
+      <br>
+                <div id="busca">
+                        Buscas de áreas, subareas, postos de coletas e equipamentos.
+
+                </div>
+<br> <br>
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-buscaArea-tab" data-toggle="tab" href="#nav-buscaArea" role="tab"
+                      aria-controls="nav-buscaArea" aria-selected="true">Áreas </a>
+              
+                    <a class="nav-item nav-link" id="nav-buscaSub-tab" data-toggle="tab" href="#nav-buscaSub" role="tab"
+                      aria-controls="nav-buscaSub" aria-selected="false">Subareas</a>
+              
+                      <a class="nav-item nav-link" id="nav-buscaPosto-tab" data-toggle="tab" href="#nav-buscaPosto" role="tab"
+                      aria-controls="nav-buscaPosto" aria-selected="false">Posto de Coleta</a>
+
+                      <a class="nav-item nav-link" id="nav-buscaEquipamentos-tab" data-toggle="tab" href="#nav-buscaEquipamentos" role="tab"
+                      aria-controls="nav-buscaEquipamentos" aria-selected="false">Equipamentos</a>
+                  </div>
+              
+                </nav>
+         
+               
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-buscaArea" role="tabpanel" aria-labelledby="nav-buscaArea-tab">
+                    <div>
+                      <form id="formCad" name="form_busca_area" action="busca_Area.php" method="POST">
+                        <div class="form-group">
+                          <label for="inputNomeBuscaArea">Nome da Área</label>
+                          <input name="Busca_area" autocomplete="off" type="text" class="form-control" id="inputNomeBuscaArea" placeholder="Ex: João Pessoa">
+                        </div>
+                    
+                     <input type="submit" class="btn btn-primary">
+                      </form>
+                  </div>
+                 </div>
+
+                
+        
+               
+                  <div class="tab-pane fade" id="nav-buscaSub" role="tabpanel" aria-labelledby="nav-buscaSub-tab">
+
+                    <div>
+                      <form id="formCad" name="form_busca_subarea" action="busca_Subarea.php" method="POST">
+                        <div class="form-group">
+                            <label for="inputNomeBuscaSubarea">Nome da Subarea</label>
+                            <input name="Busca_subarea" autocomplete="off" type="text" class="form-control" id="inputNomeBuscaSubarea" placeholder="Ex: João Pessoa">
+                          </div>
+                      
+                    <input type="submit" class="btn btn-primary"> 
+                      </form>
+                    </div>
+                  </div>
+
+                    <div class="tab-pane fade" id="nav-buscaPosto" role="tabpanel" aria-labelledby="nav-buscaPosto-tab">
+                     
+                      <div>
+                        <form id="formCad" name="form_busca_Posto_de_Coleta" action="busca_Posto_de_Coleta.php" method="POST">
+                        <div class="form-group">
+                            <label for="inputNomeBuscaPosto">Nome do Posto de Coleta</label>
+                            <input name="Busca_posto" autocomplete="off" type="text" class="form-control" id="inputNomeBuscaPosto" placeholder="Ex: João Pessoa">
+                          </div>
+                      
+                      <input type="submit" class="btn btn-primary">
+                        </form>
+                      </div>
+                     
+
+
+
+
+
+                  </div>
+
+                  <div class="tab-pane fade" id="nav-buscaEquipamentos" role="tabpanel" aria-labelledby="nav-buscaEquipamentos-tab">
+
+                    <div>
+                      <form id="formCad" name="form_busca_equipamento" action="busca_equipamento.php" method="POST">
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputTipoDoEquipamento">Escolher função</label>
+                            <select id="inputTipoDoEquipamento" class="form-control">
+                               <option selected>Escolher...</option>
+
+                            </select>
+                          </div>
+                           
+                        <div class="form-group col-md-6">
+                            <label for="inputPatrimonioEquipamentoBusca">Patrimônio do Equipamento</label>
+                            <input name="Busca_patrimonio_equipamento" type="text" class="form-control" id="inputPatrimonioEquipamentoBusca" placeholder="Ex: 590845">
+                          </div>
+                    </div>
+                     <input type="submit" class="btn btn-primary">
+                      </form>
+                    </div>
+                   
+
+
+
+
+
+                </div>
+              
+        </div>
+              
+      
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+</html>
