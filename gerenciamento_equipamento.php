@@ -263,6 +263,10 @@ session_start();
 
                                       </div>
 
+                                      <div class="form-goup">
+                                        <input type="hidden" name="ID_equipamento" id="ID_equipamento" class="form-control">
+                                      </div>
+
                                         <input type="submit"  value="Buscar" class="btn btn-primary">
                                
 

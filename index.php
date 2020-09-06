@@ -10,6 +10,15 @@
   $_SESSION['data_recebimento'] = date('aaaa/mm/dd');
   $_SESSION['ID_area'] = 0;
   $_SESSION['option'] = 0;
+
+
+  //gerenciamento equipamento
+  $_SESSION['patrimonio'] = 0;
+  $_SESSION['numero_de_serie'] = 0;
+  $_SESSION['Tipo_equipamento'] = 0;
+  $_SESSION['ID_status'] = 0;
+  $_SESSION['area'] = 0;
+  $_SESSION['ID_equipamento'] = 0;
 ?>
 
 <html>

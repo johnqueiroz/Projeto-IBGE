@@ -10,11 +10,26 @@ session_start();
     <head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <script src="https://kit.fontawesome.com/e42d0736e1.js" crossorigin="anonymous"></script>
+            <script>
+            function testeajax(patrimonio, serie, tipo, status, area, ID) { 
+          
+                document.getElementById("patrimonio").value = patrimonio;
+                document.getElementById("serie").value = serie;
+                document.getElementById("tipo").value = tipo;
+                document.getElementById("status").value = status;
+                document.getElementById("localidade").value = area;
+                document.getElementById("id").value = ID;
+              }
+            
+</script>
              <title>Sistemas de arquivo IBGE</title>
              <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
+             <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		         <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+		         <link href="css/bootstrap.min.css" rel="stylesheet">
              <link rel="stylesheet" href="estilo.css" type="text/css">
-
+             <link href="css/bootstrap.min.css" rel="stylesheet">
              <link rel="icon" type="imagem/png" href="favicon-96x96.png" />
              <style type="text/css">
                 #bt_voltar{
@@ -108,49 +123,8 @@ margin-left: 30%;
         <div>
                   
       <?php
-      
-/*if($tipo = $_POST["tipo_equipamento_escolha"]){
-       
-        $tipo = $_POST["tipo_equipamento_escolha"];
-        
-            $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
-            $sql = $conexao -> query("SELECT * FROM `equipamento` INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo
-                                      INNER JOIN status on equipamento.ID_status = status.ID_status
-                                      
-                                      where equipamento.ID_tipo = '$tipo'  ORDER BY  `patrimonio`  ASC ");
-  
-            echo(' <table class="table table-hover" id="formCad">
-              
-              <thead>
-                <tr>
-                    <th scope="col">Patrimônio</th>
-                    <th scope="col">Número de série</th>
-                    <th scope="col">Tipo de equipamento</th>
-                    <th scope="col">Status do equipamento</th>
-                    <th scope="col">Data de recebimento</th>
-                    <th scope="col">Área</th>
-                </tr>
-            </thead>');
-            
-            while($tabela = mysqli_fetch_array($sql)){
-              echo('
-              <tr>
-                <td>'.$tabela['patrimonio'].'</td>
-                <td>'.$tabela['numero_de_serie'].'</td>
-                <td>'.$tabela['tipo_equipamento'].'</td>
-                <td>'.$tabela['status'].'</td>
-                <td>'.$tabela['data_de_recebimento'].'</td>
-             
-             
-                </tr>
-              
-              ');
-  
-            }
-  
-        }
-  
-  */
+
+
         if(isset($_POST["serie"])){
           $serie =  $_POST["serie"];
         }else{
@@ -158,7 +132,7 @@ margin-left: 30%;
         }
 
         if(isset($_POST["patrimonio"])){
-          $patrimonio =  $_POST["patrimonio"];
+          $patrimonio =  $_POST["patrimonio"];          
         }else{
           $patrimonio = "";
         }
@@ -171,12 +145,14 @@ margin-left: 30%;
 
         if(isset($_POST["Status_equipamento"])){
           $Status_equipamento =  $_POST["Status_equipamento"];
+         
         }else{
           $Status_equipamento = "";
         }
 
         if(isset($_POST["escolherArea"])){
           $escolherArea =  $_POST["escolherArea"];
+          
         }else{
           $escolherArea = "";
         }
@@ -192,13 +168,13 @@ margin-left: 30%;
         $i = 0;
         $aux = 0;
         $select = "SELECT * FROM equipamento  INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo INNER JOIN status on equipamento.ID_status = status.ID_status INNER JOIN localidade_area ON equipamento.ID_area = localidade_area.ID_area WHERE";
-      // $select = "SELECT * FROM equipamento INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo INNER JOIN status on equipamento.ID_status = status.ID_status WHERE";
-
+     
         foreach ($array as $value){
           if($value != ""){
             if($i == 0){
               $select = $select." equipamento.numero_de_serie = '$value'";
               $aux = 1;
+              
             }
             if($i == 1){
               if($aux == 1){
@@ -246,13 +222,23 @@ margin-left: 30%;
 
           $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
           $resultado_equipamentos = mysqli_query($conexao, $select);
+
+
          
-      //    $dados = mysqli_query($conexao, $sql) or die(' Erro na query:' . $sql . ' ' . mysqli_error($conexao));
+    
           echo('<a id="bt_voltar" href="gerenciamento_equipamento.php"> Voltar</a>');
-          
-          /*("SELECT * FROM `equipamento` INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo
-                                    INNER JOIN status on equipamento.ID_status = status.ID_status
-                                    where equipamento.ID_tipo = '$tipo' AND equipamento.ID_status = '$status'  ORDER BY  `patrimonio`  ASC ");*/
+
+          $query = "";
+          if($query != ""){
+            $dados = mysqli_query($conexao, $query);
+            // transforma os dados em um array
+            $linha = mysqli_fetch_assoc($dados);
+            // calcula quantos dados retornaram
+            $total = mysqli_num_rows($dados);
+            // indice para o array de IDs
+            $i = 0;
+          }
+         
 ?>
 <p></p>
         		<div class="container theme-showcase" role="main">
@@ -262,6 +248,7 @@ margin-left: 30%;
 					<table class="table">
 						<thead>
 							<tr>
+                    
                     <th>Patrimônio</th>
                     <th>Número de série</th>
                     <th>Tipo de equipamento</th>
@@ -269,50 +256,114 @@ margin-left: 30%;
                     <th>Data de recebimento</th>
                     <th>Área</th>
                     <th>Editar</th>
+                    <th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php while($rows_equipamentos = mysqli_fetch_assoc($resultado_equipamentos)){ ?>
 								<tr>
-									<td><?php echo $rows_equipamentos['patrimonio']; ?></td>
-                  <td><?php echo $rows_equipamentos['numero_de_serie']; ?></td>
-                  <td><?php echo $rows_equipamentos['tipo_equipamento']; ?></td>
-                  <td><?php echo $rows_equipamentos['status']; ?></td>
-                  <td><?php echo $rows_equipamentos['data_de_recebimento']; ?></td>
-                  <td><?php echo $rows_equipamentos['nome']; ?></td>
-									<td>
-										
-										<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="<?php echo $rows_equipamentos['patrimonio']; ?>" data-whatevernome="<?php echo $rows_equipamentos['numero_de_serie']; ?>"data-whateverdetalhes="<?php echo $rows_equipamentos['ID_tipo']; ?>" data-whateverstatus="<?php echo $rows_equipamentos['ID_status']; ?>" data-whateveridequipamento="<?php echo $rows_equipamentos['ID_equipamento']; ?>" data-whateverarea="<?php echo $rows_equipamentos['ID_area']; ?>"><i class="fas fa-edit"></i></button>
+                  
+                      <td><?php echo $rows_equipamentos['patrimonio'];?></td>
+                      <td><?php echo $rows_equipamentos['numero_de_serie'];?></td>
+                      <td><?php echo $rows_equipamentos['tipo_equipamento']; ?></td>
+                      <td><?php echo $rows_equipamentos['status']; ?></td>
+                      <td><?php echo $rows_equipamentos['data_de_recebimento']; ?></td>
+                      <td><?php echo $rows_equipamentos['nome']; ?></td>
+                      <td>
+                  
+                  <button type="button" onclick="testeajax(<?php echo $rows_equipamentos['patrimonio'].','.$rows_equipamentos['numero_de_serie'].','.$rows_equipamentos['ID_tipo'].','.$rows_equipamentos['ID_status'].','.$rows_equipamentos['ID_area'].','.$rows_equipamentos['ID_equipamento']; ?>)" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></button>
 										
 									</td>
-								</tr>
-								<!-- Inicio Modal -->
-								<div class="modal fade" id="myModal<?php echo $rows_equipamentos['ID_equipamento']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<h4 class="modal-title text-center" id="myModalLabel"><?php echo $rows_equipamentos['patrimonio']; ?></h4>
-											</div>
-											<div class="modal-body">
-	
-                        <p><?php echo $rows_equipamentos['patrimonio']; ?></p>
-                        <p><?php echo $rows_equipamentos['numero_de_serie']; ?></p>
-                        <p><?php echo $rows_equipamentos['tipo_equipamento']; ?></p>
-                        <p><?php echo $rows_equipamentos['status']; ?></p>
-                        <p><?php echo $rows_equipamentos['data_de_recebimento']; ?></p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Fim Modal -->
-							<?php } ?>
-						</tbody>
+                  <td><input type="checkbox" name="mcheckbox[]" value=<?=$rows_equipamentos['ID_equipamento']?>></td>
+                </tr>
+
+
+              <?php  } ?>
+							
+              <tr>  
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="#" data-toggle="modal" data-target="#exampleModal2" onclick=verificarCheckBox()>Checkbox</a></td>
+                    <td><a href="index.php">Voltar</a></td>
+                    <td></td>
+
+                </tr>
+            </tbody>
+            
 					 </table>
 				</div>
 			</div>		
+    </div>
+    
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+           <div class="modal-body">
+ 
+			<form name="LocalidadeStatus" id="formCard"  method="POST" action="atualizacao_statusLocalidade.php" enctype="multipart/form-data">
+				<input type="hidden" name="src" id="src" value="">
+        <div class="form-group">
+
+                              <label for="inputStatus">Status do equipamento</label>
+                              <select name="Status_troca" id="status_geral" class="form-control">
+                              <option value="">Escolher</option>
+
+                                      <?php
+                                      /* Código que trás o select de tipos de equipamentos, onde se inicia a conexao com o banco, depois cria o tipo de busca que será feita no banco e cria
+                                      a variavel que junta a conexao com a busca e depois um laço de repetição para enquanto tiver dado no banco, continue buscando. */
+                                      $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
+                                      $result_status_equipamento = "SELECT * FROM status ORDER BY status ASC";
+                                      $result_status_equipamento = mysqli_query($conexao, $result_status_equipamento);
+                                      while($row_status_equipamento = mysqli_fetch_assoc($result_status_equipamento) ) {
+                                        ?>
+                                        <option value="<?php echo $row_status_equipamento['ID_status']; ?>"><?php echo $row_status_equipamento ['status'];  ?>
+                                        </option> <?php
+                                      }                                                                         
+                                      ?>
+
+                              </select>
+
+      </div>
+        
+
+      <div class="form-group">
+                                        
+                                        <label for="inputLocalidade"> Escolher área</label>
+                                        <select name="Troca_area" id="localidade_geral" class="form-control">
+                                        <option selected value="">Escolher</option>
+                
+                                        <?php  
+                                          /* Código que trás o select das áreas, onde se inicia a conexao com o banco, depois cria o tipo de busca que será feita no banco e cria
+                                a variavel que junta a conexao com a busca e depois um laço de repetição para enquanto tiver dado no banco, continue buscando. */
+                                             $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
+                                             $mostra_area = "SELECT * FROM localidade_area ORDER BY nome ASC";
+                                             $mostra_area = mysqli_query($conexao, $mostra_area);
+                                             while($row_mostra_area = mysqli_fetch_assoc($mostra_area)){
+                                              ?>
+                
+                                              <option value="<?php echo $row_mostra_area['ID_area']; ?>"><?php echo $row_mostra_area ['nome']; ?>
+                                              </option> <?php                                      
+                                            }
+                                            ?>
+                                                                                
+                                        </select>
+                
+                
+                          </div>
+                          <button type="submit" class="btn btn-success" onclick=alteraEquipamentos()> Salvar </button>
+                         <button type="button" class="btn btn-danger" onclick=recarrega()> Close</button>
+      </form>
+      
+
+			<div id="txtMensagem">Aviso</div>
+
+      </div>
+        </div>
+        </div>
 		</div>
-		
 		
 		
 
@@ -321,24 +372,25 @@ margin-left: 30%;
 			<div class="modal-content">
 			  <div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				
 		
 			  </div>
 			  <div class="modal-body">
-				<form method="POST" action="atualizacao_equipamento.php" enctype="multipart/form-data">
+				<form name="atualizacao" id="formCard" method="POST" action="atualizacao_equipamento.php" enctype="multipart/form-data">
 				  <div class="form-group">
               <label for="recipient-name" class="control-label">Patrimônio:</label>
-              <input name="patrimonio" type="text" class="form-control" id="recipient-name">
+              <input name="patrimonio" type="number" class="form-control" id="patrimonio" value="<?php echo($_SESSION['patrimonio']);?>">
           </div>
           
 				  <div class="form-group">
               <label for="message-text" class="control-label">Número de Série:</label>
-              <input name="serie" class="form-control" id="detalhes">
+              <input name="serie" class="form-control" id="serie" value="">
           </div>
 
           <div class="form-group">
 
                               <label for="inputTipo">Tipo do equipamento</label>
-                              <select name="tipo_equipamento_escolha" id="inputTipo" class="form-control">
+                              <select name="tipo_equipamento_escolha" id="tipo" class="form-control">
                               <option value="">Escolher</option>
 
                                       <?php
@@ -349,7 +401,9 @@ margin-left: 30%;
                                       $result_tipo_equipamento = mysqli_query($conexao, $result_tipo_equipamento);
                                       while($row_tipo_equipamento = mysqli_fetch_assoc($result_tipo_equipamento) ) {
                                         ?>
-                                        <option value="<?php echo $row_tipo_equipamento['ID_tipo']; ?>" ><?php echo $row_tipo_equipamento ['tipo_equipamento'];  ?>
+                                        <option value="<?php echo $row_tipo_equipamento['ID_tipo']; ?>" <?php /*if($row_tipo_equipamento['ID_tipo'] == $_SESSION['Tipo_equipamento']){
+                                                  echo('selected'); // código que deixa selecionado o tipo que foi escolhido até que seja alterado manualmente, novamente.
+                                              } */?>><?php echo $row_tipo_equipamento ['tipo_equipamento'];  ?>
                                         </option> <?php
                                         }                                                                        
                                       ?>
@@ -362,7 +416,7 @@ margin-left: 30%;
         <div class="form-group">
 
                               <label for="inputStatus">Status do equipamento</label>
-                              <select name="Status_equipamento" id="inputStatus" class="form-control">
+                              <select name="Status_equipamento" id="status" class="form-control">
                               <option value="">Escolher</option>
 
                                       <?php
@@ -389,7 +443,7 @@ margin-left: 30%;
           <div class="form-group">
                                         
                         <label for="inputLocalidade"> Escolher área</label>
-                        <select name="escolherArea" id="inputLocalidade" class="form-control">
+                        <select name="escolherArea" id="localidade" class="form-control">
                         <option selected value="">Escolher</option>
 
                         <?php  
@@ -411,9 +465,9 @@ margin-left: 30%;
 
           </div>
 
-				<input name="id" type="hidden" class="form-control" id="id-curso" value="">
+				<input name="id" type="hidden" class="form-control" id="id" value="">
 				
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" >Cancelar</button>
 				<button type="submit" class="btn btn-success">Alterar</button>
 			 
 				</form>
@@ -423,36 +477,72 @@ margin-left: 30%;
 		  </div>
 		</div>
 
-
+    </div>
+    </div>
+    <script type="text/javascript">function recarrega(){
+      location.reload();
+    }
+    </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		$('#exampleModal').on('show.bs.modal', function (event) {
-		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var recipient = button.data('whatever') // Extract info from data-* attributes //patrimonio
-		  var recipientnome = button.data('whatevernome') //numero de serie
-		  var recipientdetalhes = button.data('whateverdetalhes') //tipo
-      var recipientstatus = button.data('whateverstatus') //status
-      var recipientarea = button.data('whateverarea') //area
-      var recipientidequipamento = button.data('whateveridequipamento') //id_equipamento
-		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-		  var modal = $(this)
-      modal.find('.modal-title').text('ID ' + recipientidequipamento)
-		  modal.find('#id-curso').val(recipientidequipamento)// id equipamento
-		  modal.find('#recipient-name').val(recipient) //patrimonio
-		  modal.find('#detalhes').val(recipientnome) //numero de serie
-      modal.find('#inputTipo').val(whateverdetalhes) // tipo
-      modal.find('#inputStatus').val(whateverstatus) // status
-      modal.find('#inputLocalidade').val(whateverarea) // area
-		})
-	</script>
+		function verificarCheckBox() {
+			//seletor para os checkbox com name mcheckbox selecionados
+			var checkbox = $('input:checkbox[name^=mcheckbox]:checked'); //cria um array com os checkbox selecionados
+			var pesquisa = document.getElementById("src"); //input tipo hidden inserido no DIV do modal que irá armazenar a URL com os parâmetros do GET
+			var src = "";
+			var comboboxTipo = document.getElementById("localidade_geral");
+			var comboboxStatus = document.getElementById("status_geral");
+			
+			//verifica se existem checkbox selecionados
+			if(checkbox.length > 0){
+				//array para armazenar os valores
+				var val = [];
+				src = "atualizacao_equipamento.php?";
+				//função each para pegar os selecionados
+				checkbox.each(function(item){
+					val.push($(this).val());
+					src += "ID_equipamento[]=" + $(this).val() + "&"; //cria URL
+				});
+				
+			} 
+			pesquisa.value = src;
+			document.getElementById("txtMensagem").innerHTML = "";
+		}
+		
+		//Função com AJAX para chamar alteratipo.php via método GET 
+		function alteraEquipamentos() {
+			var pesquisa = document.getElementById("src");
+			var localidade = document.getElementById("localidade_geral");
+			var status = document.getElementById("status_geral");
+			
+			if (pesquisa.value == "") {
+				document.getElementById("txtMensagem").innerHTML = "Selecione um ou mais equipamentos para alterar.";
+				return;
+			} else {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("txtMensagem").innerHTML = this.responseText;
+					}
+				};
+				xmlhttp.open("GET",pesquisa.value+"localidade_geral="+tipo.value+"&status_geral="+status.value,true);
+				xmlhttp.send();
+			}
+			
+		}
+
+		//Função com AJAX para recarregar página via método GET 
+		function recarrega() {
+			location.reload();
+		}
+		
+		</script>
+	
 
 
-      </div>
-    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
