@@ -22,6 +22,7 @@ session_start();
               }
             
 </script>
+
              <title>Sistemas de arquivo IBGE</title>
              <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
              <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -228,17 +229,7 @@ margin-left: 30%;
     
           echo('<a id="bt_voltar" href="gerenciamento_equipamento.php"> Voltar</a>');
 
-          $query = "";
-          if($query != ""){
-            $dados = mysqli_query($conexao, $query);
-            // transforma os dados em um array
-            $linha = mysqli_fetch_assoc($dados);
-            // calcula quantos dados retornaram
-            $total = mysqli_num_rows($dados);
-            // indice para o array de IDs
-            $i = 0;
-          }
-         
+
 ?>
 <p></p>
         		<div class="container theme-showcase" role="main">
@@ -303,12 +294,12 @@ margin-left: 30%;
            <div class="modal-content">
            <div class="modal-body">
  
-			<form name="LocalidadeStatus" id="formCard"  method="POST" action="atualizacao_statusLocalidade.php" enctype="multipart/form-data">
+			<form name="LocalidadeStatus" id="formCard"  method="GET" action="atualizacao_statusLocalidade.php" enctype="multipart/form-data">
 				<input type="hidden" name="src" id="src" value="">
         <div class="form-group">
 
                               <label for="inputStatus">Status do equipamento</label>
-                              <select name="Status_troca" id="status_geral" class="form-control">
+                              <select name="Status_troca" id="status2" class="form-control">
                               <option value="">Escolher</option>
 
                                       <?php
@@ -332,7 +323,7 @@ margin-left: 30%;
       <div class="form-group">
                                         
                                         <label for="inputLocalidade"> Escolher área</label>
-                                        <select name="Troca_area" id="localidade_geral" class="form-control">
+                                        <select name="Troca_area" id="localidade2" class="form-control">
                                         <option selected value="">Escolher</option>
                 
                                         <?php  
@@ -488,23 +479,24 @@ margin-left: 30%;
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+
 		function verificarCheckBox() {
 			//seletor para os checkbox com name mcheckbox selecionados
 			var checkbox = $('input:checkbox[name^=mcheckbox]:checked'); //cria um array com os checkbox selecionados
 			var pesquisa = document.getElementById("src"); //input tipo hidden inserido no DIV do modal que irá armazenar a URL com os parâmetros do GET
 			var src = "";
-			var comboboxTipo = document.getElementById("localidade_geral");
-			var comboboxStatus = document.getElementById("status_geral");
+			var comboboxTipo = document.getElementById("localidade2");
+			var comboboxStatus = document.getElementById("status2");
 			
 			//verifica se existem checkbox selecionados
 			if(checkbox.length > 0){
 				//array para armazenar os valores
 				var val = [];
-				src = "atualizacao_equipamento.php?";
+				src = "atualizacao_statusLocalidade.php?";
 				//função each para pegar os selecionados
 				checkbox.each(function(item){
 					val.push($(this).val());
-					src += "ID_equipamento[]=" + $(this).val() + "&"; //cria URL
+					src += "id[]=" + $(this).val() + "&"; //cria URL
 				});
 				
 			} 
@@ -515,8 +507,8 @@ margin-left: 30%;
 		//Função com AJAX para chamar alteratipo.php via método GET 
 		function alteraEquipamentos() {
 			var pesquisa = document.getElementById("src");
-			var localidade = document.getElementById("localidade_geral");
-			var status = document.getElementById("status_geral");
+			var tipo = document.getElementById("localidade2");
+			var status = document.getElementById("status2");
 			
 			if (pesquisa.value == "") {
 				document.getElementById("txtMensagem").innerHTML = "Selecione um ou mais equipamentos para alterar.";
@@ -528,7 +520,7 @@ margin-left: 30%;
 					document.getElementById("txtMensagem").innerHTML = this.responseText;
 					}
 				};
-				xmlhttp.open("GET",pesquisa.value+"localidade_geral="+tipo.value+"&status_geral="+status.value,true);
+				xmlhttp.open("GET",pesquisa.value+"tipo="+tipo.value+"&status="+status.value,true);
 				xmlhttp.send();
 			}
 			
