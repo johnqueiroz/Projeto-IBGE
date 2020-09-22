@@ -28,6 +28,6 @@ $dados = $conexao ->query("SELECT * FROM servidor");
 
 
 //envia para a página de cadastro de servidores.
-header('Location:http://localhost/CadastroServidor.php');
+header('Location:http://localhost/Projeto%20IBGE/CadastroServidor.php');
 
 ?>

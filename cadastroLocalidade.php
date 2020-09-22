@@ -92,10 +92,7 @@ session_start();
       
 
                   
-                   
-                <li class="nav-item">
-                  <a class="nav-link" href="buscas.html" style="color: aliceblue;">Busca</a>
-              </li>
+
                   <div class="dropdown">
                               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Contato
@@ -116,7 +113,7 @@ session_start();
                  
                                 <a href="gerenciamento_localidade.php">  <input type="submit" value="Localidades" class="dropdown-item"></a>
   
-                                <a href="gerenciamento_coordenadores.php">    <input type="submit" value="Coordenadores" class="dropdown-item"></a>
+                                <a href="gerenciamento_coordenadores.php">    <input type="submit" value="Servidores" class="dropdown-item"></a>
                               
                               
                               </div>

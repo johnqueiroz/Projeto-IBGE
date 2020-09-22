@@ -94,7 +94,7 @@
                   </div>
                 
                  
-                  <input type="submit" class="btn btn-primary mb-2" id="ajeitada3">
+                  <input type="submit" class="btn btn-primary mb-2" value="Entrar" id="ajeitada3">
                
                 </form>
                 

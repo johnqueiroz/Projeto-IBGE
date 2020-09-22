@@ -28,9 +28,9 @@ session_start();
              <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		         <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-		         <link href="css/bootstrap.min.css" rel="stylesheet">
+		         
              <link rel="stylesheet" href="estilo.css" type="text/css">
-             <link href="css/bootstrap.min.css" rel="stylesheet">
+           
              <link rel="icon" type="imagem/png" href="favicon-96x96.png" />
              <style type="text/css">
                 #bt_voltar{
@@ -47,6 +47,12 @@ margin-left: 30%;
               
                
 </style>
+		<!-- Remember to include jQuery :) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+		<!-- jQuery Modal -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
     </head>
 
@@ -63,10 +69,7 @@ margin-left: 30%;
       
 
                   
-                   
-                <li class="nav-item">
-                  <a class="nav-link" href="buscas.html" style="color: aliceblue;">Busca</a>
-              </li>
+
                   <div class="dropdown">
                               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Contato
@@ -87,7 +90,7 @@ margin-left: 30%;
                  
                               <a href="gerenciamento_localidade.php">  <input type="submit" value="Localidades" class="dropdown-item"></a>
 
-                              <a href="gerenciamento_coordenadores.php">    <input type="submit" value="Coordenadores" class="dropdown-item"></a>
+                              <a href="gerenciamento_coordenadores.php">    <input type="submit" value="Servidores" class="dropdown-item"></a>
                               
                               
                               </div>
@@ -168,7 +171,7 @@ margin-left: 30%;
 
         $i = 0;
         $aux = 0;
-        $select = "SELECT * FROM equipamento  INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo INNER JOIN status on equipamento.ID_status = status.ID_status INNER JOIN localidade_area ON equipamento.ID_area = localidade_area.ID_area WHERE";
+        $select = "SELECT * FROM equipamento INNER JOIN tipo on equipamento.ID_tipo = tipo.ID_tipo INNER JOIN status on equipamento.ID_status = status.ID_status INNER JOIN localidade_area ON equipamento.ID_area = localidade_area.ID_area WHERE";
      
         foreach ($array as $value){
           if($value != ""){
@@ -245,9 +248,12 @@ margin-left: 30%;
                     <th>Tipo de equipamento</th>
                     <th>Status do equipamento</th>
                     <th>Data de recebimento</th>
+                    <th>Data de Distribuição</th> 
+                    <th>Observações</th>
                     <th>Área</th>
                     <th>Editar</th>
                     <th></th>
+                    
 							</tr>
 						</thead>
 						<tbody>
@@ -259,7 +265,9 @@ margin-left: 30%;
                       <td><?php echo $rows_equipamentos['tipo_equipamento']; ?></td>
                       <td><?php echo $rows_equipamentos['status']; ?></td>
                       <td><?php echo $rows_equipamentos['data_de_recebimento']; ?></td>
-                      <td><?php echo $rows_equipamentos['nome']; ?></td>
+                      <td><?php echo $rows_equipamentos['data_de_distribuicao']; ?></td>
+                      <td><?php echo $rows_equipamentos['observacao']; ?></td>
+                      <td><?php echo $rows_equipamentos['nome_area']; ?></td>
                       <td>
                   
                   <button type="button" onclick="testeajax(<?php echo $rows_equipamentos['patrimonio'].','.$rows_equipamentos['numero_de_serie'].','.$rows_equipamentos['ID_tipo'].','.$rows_equipamentos['ID_status'].','.$rows_equipamentos['ID_area'].','.$rows_equipamentos['ID_equipamento']; ?>)" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></button>
@@ -277,10 +285,11 @@ margin-left: 30%;
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
                     <td><a href="#" data-toggle="modal" data-target="#exampleModal2" onclick=verificarCheckBox()>Checkbox</a></td>
                     <td><a href="index.php">Voltar</a></td>
                     <td></td>
-
                 </tr>
             </tbody>
             
@@ -330,12 +339,12 @@ margin-left: 30%;
                                           /* Código que trás o select das áreas, onde se inicia a conexao com o banco, depois cria o tipo de busca que será feita no banco e cria
                                 a variavel que junta a conexao com a busca e depois um laço de repetição para enquanto tiver dado no banco, continue buscando. */
                                              $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
-                                             $mostra_area = "SELECT * FROM localidade_area ORDER BY nome ASC";
+                                             $mostra_area = "SELECT * FROM localidade_area ORDER BY nome_area ASC";
                                              $mostra_area = mysqli_query($conexao, $mostra_area);
                                              while($row_mostra_area = mysqli_fetch_assoc($mostra_area)){
                                               ?>
                 
-                                              <option value="<?php echo $row_mostra_area['ID_area']; ?>"><?php echo $row_mostra_area ['nome']; ?>
+                                              <option value="<?php echo $row_mostra_area['ID_area']; ?>"><?php echo $row_mostra_area ['nome_area']; ?>
                                               </option> <?php                                      
                                             }
                                             ?>
@@ -367,15 +376,25 @@ margin-left: 30%;
 		
 			  </div>
 			  <div class="modal-body">
-				<form name="atualizacao" id="formCard" method="POST" action="atualizacao_equipamento.php" enctype="multipart/form-data">
+				<form>
 				  <div class="form-group">
               <label for="recipient-name" class="control-label">Patrimônio:</label>
-              <input name="patrimonio" type="number" class="form-control" id="patrimonio" value="<?php echo($_SESSION['patrimonio']);?>">
+              <input name="patrimonio" type="number" class="form-control" id="patrimonio" value="">
           </div>
           
 				  <div class="form-group">
               <label for="message-text" class="control-label">Número de Série:</label>
-              <input name="serie" class="form-control" id="serie" value="">
+              <input name="serie" type="text" class="form-control" id="serie" value="">
+          </div>
+
+          <div class="form-group">
+              <label for="observacoes" class="control-label">Observações</label>
+              <input name="observacoes" type="text" class="form-control" id="observacoes" value="">
+          </div>
+
+          <div class="form-group">
+              <label for="distribuicao" class="control-label">Data de distribuição</label>
+              <input name="distribuicao" type="date" class="form-control" id="distribuicao" value="">
           </div>
 
           <div class="form-group">
@@ -441,12 +460,12 @@ margin-left: 30%;
                           /* Código que trás o select das áreas, onde se inicia a conexao com o banco, depois cria o tipo de busca que será feita no banco e cria
                 a variavel que junta a conexao com a busca e depois um laço de repetição para enquanto tiver dado no banco, continue buscando. */
                              $conexao = mysqli_connect("localhost", "root", "", "projeto_ibge");
-                             $mostra_area = "SELECT * FROM localidade_area ORDER BY nome ASC";
+                             $mostra_area = "SELECT * FROM localidade_area ORDER BY nome_area ASC";
                              $mostra_area = mysqli_query($conexao, $mostra_area);
                              while($row_mostra_area = mysqli_fetch_assoc($mostra_area)){
                               ?>
 
-                              <option value="<?php echo $row_mostra_area['ID_area']; ?>"><?php echo $row_mostra_area ['nome']; ?>
+                              <option value="<?php echo $row_mostra_area['ID_area']; ?>"><?php echo $row_mostra_area ['nome_area']; ?>
                               </option> <?php                                      
                             }
                             ?>
@@ -456,18 +475,20 @@ margin-left: 30%;
 
           </div>
 
-				<input name="id" type="hidden" class="form-control" id="id" value="">
+        <input name="id" type="hidden" class="form-control" id="id" value="">
+        
+       
 				
-				<button type="button" class="btn btn-danger" data-dismiss="modal" >Cancelar</button>
-				<button type="submit" class="btn btn-success">Alterar</button>
+				<button type="button" onclick="recarrega()" class="btn btn-danger" data-dismiss="modal" >Cancelar</button>
+				<button type="button" onclick="alteraEquipamento()" class="btn btn-success">Alterar</button>
 			 
-				</form>
+        </form>
+        <div id="txtMensagem">Aviso</div>
 			  </div>
-			  
+			 
 			</div>
 		  </div>
-		</div>
-
+    </div>
     </div>
     </div>
     <script type="text/javascript">function recarrega(){
@@ -477,22 +498,22 @@ margin-left: 30%;
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-
+    
+  <script type="text/javascript">
+  
 		function verificarCheckBox() {
 			//seletor para os checkbox com name mcheckbox selecionados
 			var checkbox = $('input:checkbox[name^=mcheckbox]:checked'); //cria um array com os checkbox selecionados
 			var pesquisa = document.getElementById("src"); //input tipo hidden inserido no DIV do modal que irá armazenar a URL com os parâmetros do GET
 			var src = "";
-			var comboboxTipo = document.getElementById("localidade2");
-			var comboboxStatus = document.getElementById("status2");
+			var comboboxTipo = document.getElementById("tipo");
+			var comboboxStatus = document.getElementById("status");
 			
 			//verifica se existem checkbox selecionados
 			if(checkbox.length > 0){
 				//array para armazenar os valores
 				var val = [];
-				src = "atualizacao_statusLocalidade.php?";
+				src = "alteratipo.php?";
 				//função each para pegar os selecionados
 				checkbox.each(function(item){
 					val.push($(this).val());
@@ -505,26 +526,28 @@ margin-left: 30%;
 		}
 		
 		//Função com AJAX para chamar alteratipo.php via método GET 
-		function alteraEquipamentos() {
-			var pesquisa = document.getElementById("src");
-			var tipo = document.getElementById("localidade2");
-			var status = document.getElementById("status2");
-			
-			if (pesquisa.value == "") {
-				document.getElementById("txtMensagem").innerHTML = "Selecione um ou mais equipamentos para alterar.";
-				return;
-			} else {
-				var xmlhttp = new XMLHttpRequest();
-				xmlhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("txtMensagem").innerHTML = this.responseText;
-					}
-				};
-				xmlhttp.open("GET",pesquisa.value+"tipo="+tipo.value+"&status="+status.value,true);
+		function alteraEquipamento() {
+      var patrimonio = document.getElementById("patrimonio");
+      var serie = document.getElementById("serie");
+      var observacoes = document.getElementById("observacoes");
+      var distribuicao = document.getElementById("distribuicao");
+			var tipo = document.getElementById("tipo");
+			var status = document.getElementById("status");
+      var localidade = document.getElementById("localidade");
+			var id = document.getElementById("id");
+      var xmlhttp = new XMLHttpRequest();
+
+				xmlhttp.onreadystatechange = 	document.getElementById("txtMensagem").innerHTML = this.responseText;
+					
+				
+        var url = "atualizacao_equipamento.php?patrimonio="+patrimonio.value+"&serie="+serie.value+"&observacao="+observacoes.value+"&distribuicao="+distribuicao.value+"&tipo="+tipo.value+"&status="+status.value+"&localidade="+localidade.value+"&id="+id.value;
+				xmlhttp.open("GET",url,true);
 				xmlhttp.send();
+
+        console.log(xmlhttp.responseText);
 			}
 			
-		}
+		
 
 		//Função com AJAX para recarregar página via método GET 
 		function recarrega() {
@@ -532,6 +555,7 @@ margin-left: 30%;
 		}
 		
 		</script>
+		
 	
 
 
