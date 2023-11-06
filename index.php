@@ -24,11 +24,10 @@
             <a href="#" class="login"><b>Continuar como johnqueiroz27</b></a></br>
 
             <div class="trocarConta">
-              <p><b>Não é johnqueiroz27?</b> <a href="login.php" class="link">Trocar de conta</a> 
+              <p><b>Não é johnqueiroz27?</b> <a href="login.php" class="link">Trocar de conta</a> ou <a href="Users/Cadastros/cadastroUser.php" class="link">Criar conta</a>
             </div>
             <!-- TODO criar o login.php -->
         </div>
-    
     </div>
 
  

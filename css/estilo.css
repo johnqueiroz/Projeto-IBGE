@@ -60,12 +60,14 @@ background-color: #ffffff;
 }
 
 .login {
-  background-color: #0095f6;
+  background-color: #004f88;
   color: #ffffff;
   padding: 8px;
+  margin-right: 30px;
   border-radius: 4px;
   justify-content: center;
   align-items: center;
+  display: flex;
 }
 
 .trocarConta{
@@ -77,5 +79,5 @@ background-color: #ffffff;
 
 
 .trocarConta > p > a.link {
-  color: #0095f6;
+  color: #004f88;
 }
