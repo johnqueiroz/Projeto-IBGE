@@ -19,9 +19,13 @@
             $loginUser = $createUser->verificarConta();
 
             if($loginUser){
-                echo "Usuário validado.";
+                session_start();
+                $_SESSION['userEmail'] = $formData["emailServidor"];
+
+                //TODO Enviar para uma página inicial
             }else{
                 echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
+                //TODO Criar um alert dizendo que senha ou email estão errados
             }
         }
         
