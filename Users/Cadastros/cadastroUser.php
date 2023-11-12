@@ -21,7 +21,7 @@
                 $cadastroUser = $createUser->inserirUser();
     
                 if($cadastroUser){
-                    header("Location: ../../index.php");
+                    header("Location: ../../login/index.php");
                 }else{
                      echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
                 }

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@100&family=Ubuntu:wght@400;500;700&display=swap');
+
+.camposServ{
+    padding: 10px 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.inputLogin{
+    width: 150%;
+    padding: 9px 0 7px 8px;
+    flex: 1 0 auto;
+    margin: 0;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+::placeholder {
+    font-size: 12px; /* Tamanho da fonte do placeholder */
+    color: #999; /* Cor do texto do placeholder */
+}
+
+.button-content{
+    width: 50%;
+    height: 30px;
+    color: #fff;
+    background-color: rgb(12, 143, 236);
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+.button-content:hover{
+    background-color: #004f88;
+}
+
+.container{
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border: 1px solid lightgray;
+    background-color: #ffffff;
+}
+
+
+.logoIbge img{
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+    margin-top: 8%;
+}

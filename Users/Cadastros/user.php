@@ -1,5 +1,7 @@
 <?php
-require_once '../../BD/Conexao.php';
+
+require_once __DIR__ . '/../../BD/conexao.php';
+
 
 
 class user extends Conexao{
@@ -23,7 +25,7 @@ class user extends Conexao{
 
         $cadastrarUser->bindParam(':nomeServidor', $this->formData['nomeServidor'], PDO::PARAM_STR);
         $cadastrarUser->bindParam(':siapeServidor', $this->formData['siapeServidor'], PDO::PARAM_STR);
-        $cadastrarUser->bindParam(':emailServidor', $this->formData['emailServidor'], PDO::PARAM_INT);
+        $cadastrarUser->bindParam(':emailServidor', $this->formData['emailServidor'], PDO::PARAM_STR);
         $cadastrarUser->bindParam(':funcaoServidor', $this->formData['funcaoServidor'], PDO::PARAM_STR);
         $cadastrarUser->bindParam(':areaServidor', $this->formData['areaServidor'], PDO::PARAM_STR);
         
@@ -43,8 +45,8 @@ class user extends Conexao{
 
     public function verificarConta(): bool
     {
-        $this->conn = $this->conectar();
-        $query_verificar = "SELECT emailServidor, senha FROM user WHERE emailServidor =:emailServidor  LIMIT 1";
+        $this->conn = $this->conectarBD();
+        $query_verificar = "SELECT emailServidor, senha FROM user WHERE emailServidor =:emailServidor LIMIT 1";
         $verificar_entrada = $this->conn->prepare($query_verificar);
 
         $verificar_entrada->bindParam(':emailServidor', $this->formData['emailServidor'], PDO::PARAM_STR);
