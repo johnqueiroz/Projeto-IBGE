@@ -7,6 +7,46 @@
     display: flex;
 }
 
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Arial;
+    box-sizing: border-box;
+    text-decoration: none;
+    padding: 0;
+    font-size: 14px;
+  }
+  
+  body{
+    width: 100%;
+    background-color: #fbfbfb;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.container{
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border: 1px solid lightgray;
+    background-color: #ffffff;
+}
+
+
+.logoIbge img{
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+    margin-top: 8%;
+}
+
 .inputLogin{
     width: 150%;
     padding: 9px 0 7px 8px;
@@ -24,11 +64,12 @@
 }
 
 .button-content{
-    width: 50%;
+    width: 80%;
     height: 30px;
     color: #fff;
     background-color: rgb(12, 143, 236);
     margin-bottom: 20px;
+    margin-left: 23px;
     border-radius: 5px;
     border: none;
     text-align: center;
@@ -41,24 +82,4 @@
 
 .button-content:hover{
     background-color: #004f88;
-}
-
-.container{
-    display: flex;
-    padding: 0;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
-    border: 1px solid lightgray;
-    background-color: #ffffff;
-}
-
-
-.logoIbge img{
-    width: 20%;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10%;
-    margin-top: 8%;
 }
