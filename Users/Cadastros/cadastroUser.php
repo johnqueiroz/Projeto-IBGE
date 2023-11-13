@@ -13,6 +13,15 @@
         include_once '../../funcoesSelect/selects.php';
         include_once 'user.php';
 
+        // Começo destruindo a sessão para garantir que não há nenhum dado ao criar o usuário
+        session_start();
+
+        // Destroi todas as variáveis de sessão
+        $_SESSION = array();
+        
+        // Destroi a sessão
+        session_destroy();
+
         $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
             if(!empty($formData['infoUser'])){
@@ -22,6 +31,7 @@
     
                 if($cadastroUser){
                     header("Location: ../../login/index.php");
+                    exit();
                 }else{
                      echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
                 }

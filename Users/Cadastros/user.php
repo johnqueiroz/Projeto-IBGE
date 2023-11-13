@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../../BD/conexao.php';
 
 
-
 class user extends Conexao{
 
     public object $conn;
@@ -51,12 +50,38 @@ class user extends Conexao{
 
         $verificar_entrada->bindParam(':emailServidor', $this->formData['emailServidor'], PDO::PARAM_STR);
         $verificar_entrada->execute();
-        $retorno = $verificar_entrada->fetch();
+        $retorno = $verificar_entrada->fetch(PDO::FETCH_ASSOC);
 
-        if(password_verify($this->formData['senha'], $retorno['senha'])){
+        if($retorno !== false && isset($retorno['senha']) && password_verify($this->formData['senha'], $retorno['senha'])){
           return true;
         }else{
           return false;
+        }
+    }
+
+    public function coletarDadosUser(){
+
+        $this->conn = $this->conectarBD();
+
+
+        $userEmail = $_SESSION['userEmail'];
+
+        $query = "SELECT IdServidor, 
+        nomeServidor, 
+        siapeServidor
+        FROM user WHERE emailServidor = '$userEmail' LIMIT 1";
+        
+        
+        $prepararQuery = $this->conn->prepare($query);
+       /* echo $userEmail;
+        $prepararQuery->bindParam(':emailServidor', $userEmail, PDO::PARAM_STR);*/
+        
+        try{
+            $prepararQuery->execute();
+        }catch (PDOException $erro){
+            echo $erro->getMessage();
+        }finally{
+            return $prepararQuery->fetch(PDO::FETCH_ASSOC);
         }
     }
 
