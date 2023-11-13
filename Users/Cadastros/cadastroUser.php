@@ -40,7 +40,7 @@
 
     <div class="container">
         <div class="logoIbge">
-            <img src="../../images/IBGE.png" alt="Logo do IBGE">
+           <a href="../../login/index.php"> <img src="../../images/IBGE.png" alt="Logo do IBGE"></a>
         </div>
 
         <br>
