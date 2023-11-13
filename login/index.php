@@ -43,7 +43,7 @@ $dadosUsuario = $createUser->coletarDadosUser();
         <div class="rodapeLogin">
             <a href="#" class="login"><b>Continuar como <?php echo $dadosUsuario['nomeServidor'];?></b></a></br>
             <div class="trocarConta">
-              <p><b>Não é <?php echo $dadosUsuario['nomeServidor'];?>?</b> <a href="../logout.php" class="link">Trocar de conta</a> ou <a href="../Users/Cadastros/cadastroUser.php" class="link">Criar conta</a>
+              <p><b>Não é <?php echo $dadosUsuario['nomeServidor'];?>?</b> <a href="../auxiliar/logout.php" class="link">Trocar de conta</a> ou <a href="../Users/Cadastros/cadastroUser.php" class="link">Criar conta</a>
             </div>
             
         </div>

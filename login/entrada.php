@@ -28,7 +28,9 @@ if(!empty($formData['loginUser'])){
         session_start();
         $_SESSION['userEmail'] = $formData["emailServidor"];
 
-        //TODO Enviar para uma página inicial
+        echo "<script>window.location.href = '../auxiliar/dashboard.php';</script>";
+
+        exit();
     }else {
         // Exibe o alerta usando JavaScript
         echo "<script>alert('Erro: Usuário não cadastrado! Email ou senha incorretos.');</script>";
@@ -60,6 +62,8 @@ if(!empty($formData['loginUser'])){
             </div>
 
             <button type="submit" name="loginUser"  class="button-content" value="Entrar">Entrar</button>
+
+            <div>Ainda não tem uma conta? <a href="../Users/Cadastros/cadastroUser.php" class="link">Criar conta</a></div>
 
         </form>    
     </div>
