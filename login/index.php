@@ -1,4 +1,15 @@
-<!-- TODO Conexão com o banco e pegar as informações de John -->
+<?php
+// Essa página só deve aparecer caso o usuário esteja logado
+// Dessa forma inicia a sessão para verficação
+session_start();
+
+// Verificar se o usuário está logado ou não
+if (!isset($_SESSION['userEmail'])) {
+// Redirecionar para a página de login caso não esteja
+    header("Location: entrada.php");
+    exit();
+}
+?>
 
 <html>
     <head>
@@ -11,6 +22,15 @@
 
 <body>
 
+<?php
+// Faz uso da classe de usuário para coletar os dados de usuário para utilizar o nome na página
+require_once '../Users/Cadastros/user.php';
+
+$createUser = new user();
+$dadosUsuario = $createUser->coletarDadosUser();
+
+?>
+
     <div class="container">
         <div class="logoIbge">
             <img src="../images/IBGE.png" alt="Logo do IBGE">
@@ -21,12 +41,11 @@
         </div>
 
         <div class="rodapeLogin">
-            <a href="#" class="login"><b>Continuar como johnqueiroz27</b></a></br>
-
+            <a href="#" class="login"><b>Continuar como <?php echo $dadosUsuario['nomeServidor'];?></b></a></br>
             <div class="trocarConta">
-              <p><b>Não é johnqueiroz27?</b> <a href="entrada.php" class="link">Trocar de conta</a> ou <a href="../Users/Cadastros/cadastroUser.php" class="link">Criar conta</a>
+              <p><b>Não é <?php echo $dadosUsuario['nomeServidor'];?>?</b> <a href="../logout.php" class="link">Trocar de conta</a> ou <a href="../Users/Cadastros/cadastroUser.php" class="link">Criar conta</a>
             </div>
-            <!-- TODO criar o login.php -->
+            
         </div>
     </div>
 

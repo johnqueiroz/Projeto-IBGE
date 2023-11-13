@@ -8,28 +8,41 @@
 
 <body>
 
-    <?php
+<?php
 
-        require_once '../Users/Cadastros/user.php';
+// Utiliza a classe user para verificar a conta para entrar no sistema.
+require_once '../Users/Cadastros/user.php';
         
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        if(!empty($formData['loginUser'])){
-            $createUser = new user();
-            $createUser->formData = $formData;
-            $loginUser = $createUser->verificarConta();
+// "Transforma" o formData em array para usar os dados separadamente. Os dados do formData
+// vem do formulário através do "name" no "button"
+$formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-            if($loginUser){
-                session_start();
-                $_SESSION['userEmail'] = $formData["emailServidor"];
+// Se o formData não for vazio, vai ser criado um novo usuário para verificar seus dados
+if(!empty($formData['loginUser'])){
+    $createUser = new user();
+    $createUser->formData = $formData;
+    $loginUser = $createUser->verificarConta();
 
-                //TODO Enviar para uma página inicial
-            }else{
-                echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
-                //TODO Criar um alert dizendo que senha ou email estão errados
-            }
-        }
+// Caso o login seja bem sucedido, vai ser criada uma sessão e o email do servidor ficará salvo em uma variável de sessão
+    if($loginUser){
+        session_start();
+        $_SESSION['userEmail'] = $formData["emailServidor"];
+
+        //TODO Enviar para uma página inicial
+    }else {
+        // Exibe o alerta usando JavaScript
+        echo "<script>alert('Erro: Usuário não cadastrado! Email ou senha incorretos.');</script>";
+    
+        // Aguarda alguns segundos antes de redirecionar para a página de entrada
+        echo "<script>setTimeout(function() { window.location.href = 'entrada.php'; }, 100);</script>";
+    
+        // Finaliza o script
+        exit();
+    }
+    
+}
         
-    ?>
+?>
 
     <div class="container">
         <div class="logoIbge">
