@@ -23,6 +23,7 @@
     --info-color: #5bc0de;
     --warning-color: #ed9c28;
     --danger-color: #d2322d;
+    --danger-hover-color: #f00e06;
 }
 
 body {
@@ -72,11 +73,30 @@ body {
       border-radius: 5px;
       cursor: pointer;
       color: var(--main-color);
+      border: none;
   }
   
   .adicionar:hover {
       background-color: var(--site-color);
   }
+
+  .remover{
+    background-color: var(--danger-color);
+    border: none;
+    font-size: 15px;
+    padding: 0.30rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--main-color);
+  }
+
+  .remover:hover {
+    background-color: var(--danger-hover-color);
+}
+
+.itemLi{
+    padding: 3px;
+}
 
 .navbar {
     color: var(--main-color);
@@ -90,10 +110,6 @@ body {
     font-size: 17px;
     top: 0;
     z-index: 1;
-}
-
-.remover{
-    
 }
 
 .navbar .navbar-content {

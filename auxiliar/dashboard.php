@@ -35,7 +35,7 @@ $dadosUsuario = $createUser->coletarDadosUser();
 $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
 
 $createEquip = new funcEquipamentos();
-$dadosEquipamento = $createEquip->coletarDadosEquipamentos();
+$dadosEquipamento = $createEquip->coletarQuantEquipamentos();
 
 
 ?>
@@ -77,9 +77,9 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
         <div class="sidebar">
             <a href="dashboard.php" class="sidebar-nav active"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
-            <a href="#" class="sidebar-nav"><i class="icon fa-solid fa-users"></i><span>Listar</span></a>
+            <a href="../listas/listarEqp.php" class="sidebar-nav"><i class="icon fa-solid fa-users"></i><span>Listar</span></a>
 
-            <a href="#" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+            <a href="logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
 
         </div>
         <!-- Fim da Sidebar -->
@@ -128,6 +128,7 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
         </div>
     </dialog>
 
+    <script src="../js/inatividade.js"></script>
     <script src="../js/modal.js"></script>
     <script src="../js/index.js"></script>
 
