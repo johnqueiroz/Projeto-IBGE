@@ -77,7 +77,7 @@ $dadosEquipamento = $createEquip->coletarQuantEquipamentos();
         <div class="sidebar">
             <a href="dashboard.php" class="sidebar-nav active"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
-            <a href="../listas/listarEqp.php" class="sidebar-nav"><i class="icon fa-solid fa-users"></i><span>Listar</span></a>
+            <a href="../listas/listarEqp.php" class="sidebar-nav"><i class="icon fa-solid fa-rectangle-list"></i><span>Equipamentos</span></a>
 
             <a href="logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
 
