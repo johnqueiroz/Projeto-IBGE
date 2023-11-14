@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/11/2023 às 19:55
+-- Tempo de geração: 14/11/2023 às 22:14
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -64,7 +64,9 @@ CREATE TABLE `equipamentos` (
 --
 
 INSERT INTO `equipamentos` (`idEquipamento`, `patrimonio`, `numero_de_serie`, `IdTipo`, `IdArea`, `IdStatus`, `IdServidor`, `dataMovimentacao`) VALUES
-(1, 123456, 'ABC123', 3, 4, 3, 1, '2023-11-03');
+(1, 123456, 'ABC123', 3, 4, 3, 1, '2023-11-03'),
+(2, 123456, '123', 1, 4, 2, 2, '2023-11-15'),
+(3, 12, '4536746', 3, 6, 3, 2, '2023-11-14');
 
 -- --------------------------------------------------------
 
@@ -74,14 +76,14 @@ INSERT INTO `equipamentos` (`idEquipamento`, `patrimonio`, `numero_de_serie`, `I
 
 CREATE TABLE `funcao` (
   `idFuncao` int(11) NOT NULL,
-  `funcao` varchar(50) NOT NULL
+  `nomeFuncao` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `funcao`
 --
 
-INSERT INTO `funcao` (`idFuncao`, `funcao`) VALUES
+INSERT INTO `funcao` (`idFuncao`, `nomeFuncao`) VALUES
 (1, 'Coordenador de TI'),
 (2, 'Gerente de RH');
 
@@ -168,7 +170,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`IdServidor`, `nomeServidor`, `siapeServidor`, `emailServidor`, `telefoneServidor`, `funcaoServidor`, `areaServidor`, `senha`) VALUES
-(1, 'John Emerson Ferreira Regis Filho', 34411188, 'johnemerson67@gmail.com', 83998341257, 1, 4, 'A4D6089C2DB866C9C76B652DF2A57A5F1AD4FC92A0BBF3C124258938FEC13A18140F8CC1BAA040FAFF7D637E5113672874DAB0767E6AD490A4832E52AA20663E');
+(1, 'John Emerson Ferreira Regis Filho', 34411188, 'johnemerson67@gmail.com', 83998341257, 1, 4, 'A4D6089C2DB866C9C76B652DF2A57A5F1AD4FC92A0BBF3C124258938FEC13A18140F8CC1BAA040FAFF7D637E5113672874DAB0767E6AD490A4832E52AA20663E'),
+(2, 'Adm', 123456, 'adm@adm.com', 0, 1, 5, '$2y$10$6Me2ARJsGdYqfAJ9sZU2X.suXoeAr08DqYZYftfnIfPx3KAJz1/R6');
 
 --
 -- Índices para tabelas despejadas
@@ -186,10 +189,10 @@ ALTER TABLE `area`
 --
 ALTER TABLE `equipamentos`
   ADD PRIMARY KEY (`idEquipamento`),
-  ADD KEY `fk_equipamento_area` (`IdArea`),
   ADD KEY `fk_equipamento_servidor` (`IdServidor`),
   ADD KEY `fk_equipamento_tipo` (`IdTipo`),
-  ADD KEY `fk_equipamento_status` (`IdStatus`);
+  ADD KEY `fk_equipamento_status` (`IdStatus`),
+  ADD KEY `fk_equipamento_area` (`IdArea`);
 
 --
 -- Índices de tabela `funcao`
@@ -237,7 +240,7 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT de tabela `equipamentos`
 --
 ALTER TABLE `equipamentos`
-  MODIFY `idEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `funcao`
@@ -267,7 +270,7 @@ ALTER TABLE `tipoequipamento`
 -- AUTO_INCREMENT de tabela `user`
 --
 ALTER TABLE `user`
-  MODIFY `IdServidor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `IdServidor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
