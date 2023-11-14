@@ -49,14 +49,23 @@ class user extends Conexao{
         $verificar_entrada = $this->conn->prepare($query_verificar);
 
         $verificar_entrada->bindParam(':emailServidor', $this->formData['emailServidor'], PDO::PARAM_STR);
-        $verificar_entrada->execute();
-        $retorno = $verificar_entrada->fetch(PDO::FETCH_ASSOC);
-
-        if($retorno !== false && isset($retorno['senha']) && password_verify($this->formData['senha'], $retorno['senha'])){
-          return true;
-        }else{
-          return false;
+        
+        try {
+            $verificar_entrada->execute();
+            $retorno = $verificar_entrada->fetch(PDO::FETCH_ASSOC);
+            
+            if ($retorno !== false && isset($retorno['senha']) && password_verify($this->formData['senha'], $retorno['senha'])) {
+                return true;
+            } else {
+                // Trate o caso em que a condição acima não é atendida
+                return false;
+            }
+        } catch (PDOException $erro) {
+            // Trate a exceção do PDO
+            //echo $erro->getMessage();
+            return false;
         }
+          
     }
 
     public function coletarDadosUser(){

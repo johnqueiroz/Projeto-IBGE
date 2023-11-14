@@ -23,7 +23,7 @@ bars.addEventListener("click", () => {
 
 window.matchMedia("(max-width: 768px)").matches ? sidebar.classList.remove("active") : sidebar.classList.add("active");
 
-
+// Redirecionamento para encerrar a pág
 function encerrar() {
     window.location.href = 'logout.php';
-  }
+}

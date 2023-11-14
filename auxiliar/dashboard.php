@@ -28,6 +28,7 @@ if (!isset($_SESSION['userEmail'])) {
 include_once '../Users/Cadastros/user.php';
 include_once '../equipamentos/funcEquipamentos.php';
 
+
 $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
 
@@ -35,6 +36,7 @@ $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
 
 $createEquip = new funcEquipamentos();
 $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
+
 
 ?>
 
@@ -87,20 +89,20 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
 
                 <div class="box box-second">
                     <span class="fa-solid fa-truck-ramp-box"></span>
-                    <span><?php echo $dadosEquipamento['totalEquipamentos']; ?></span>
-                    <span>Equipamentos</span>
+                    <span><b><?php echo $dadosEquipamento['totalEquipamentos']; ?></b></span>
+                    <span><b>Equipamentos</b></span>
                 </div>
 
-                <div class="box box-third">
-                    <span class="fa-solid fa-circle-check"></span>
-                    <span>12</span>
-                    <span>Lembretes</span>
+                <div class="box box-third" onclick="abrirModal()">
+                    <span class="fa-solid fa-triangle-exclamation fa-2xl"></span>
+                    <span id="quantidadeLembretes"><b>0</b></span>
+                    <span><b>Lembrete</b></span>
                 </div>
 
                 <div class="box box-fourth">
                     <span class="fa-solid fa-triangle-exclamation"></span>
-                    <span><?php echo $dadosEquipamento['quantidadeStatus2'] + $dadosEquipamento['quantidadeStatus3'];?></span>
-                    <span>Equipamentos em alerta</span>
+                    <span><b><?php echo $dadosEquipamento['quantidadeStatus2'] + $dadosEquipamento['quantidadeStatus3'];?></b></span>
+                    <span><b>Equipamentos em alerta</b></span>
                 </div>
             </div>
 
@@ -109,6 +111,24 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
     </div>
     <!-- Fim Conteudo -->
 
+
+
+    <dialog class="modal-lembrete">
+        <div class="lembretes-dentro-modal">
+
+            <h2 class="titleModal">Lembretes</h2>
+
+            <input type="text" name="lembrete" id="lembrete" placeholder="Digite algum lembrete" size="70">
+
+            <button onclick="adicionar()" name="infoLembrete" class="adicionar">Adicione um lembrete</button>
+
+            <ul id="lista-lembrete">
+                
+            </ul>
+        </div>
+    </dialog>
+
+    <script src="../js/modal.js"></script>
     <script src="../js/index.js"></script>
 
 </body>

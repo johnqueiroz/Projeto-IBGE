@@ -30,7 +30,7 @@ class funcEquipamentos extends Conexao{
         
         $prepararQuery = $this->conn->prepare($query);
        
-        $prepararQuery->bindParam(':IdServidor', $IdServidor, PDO::PARAM_STR);
+        $prepararQuery->bindParam(':IdServidor', $IdServidor, PDO::PARAM_INT);
         
         try{
             $prepararQuery->execute();
