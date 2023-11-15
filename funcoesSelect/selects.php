@@ -1,12 +1,12 @@
 <?php
-require_once '../../BD/Conexao.php';
+require_once __DIR__ . '/../BD/conexao.php';
 
 class selects extends conexao {
 
-    public function listarAreas() {
+    public function listarDados($tabela, $colunaOrdenacao) {
         try {
             $conexao = $this->conectarBD();
-            $query = 'SELECT * FROM area ORDER BY nomeArea ASC';
+            $query = "SELECT * FROM $tabela ORDER BY $colunaOrdenacao ASC";
             $stmt = $conexao->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -14,18 +14,5 @@ class selects extends conexao {
             die('Erro na consulta: ' . $erro->getMessage());
         }
     }
-
-
-
-    public function listarFuncoes() {
-        try {
-            $conexao = $this->conectarBD();
-            $query = 'SELECT * FROM funcao ORDER BY nomeFuncao ASC';
-            $stmt = $conexao->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $erro) {
-            die('Erro na consulta: ' . $erro->getMessage());
-        }
-    }
+    
 }
