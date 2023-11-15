@@ -1,3 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+}
+
+:root {
+    --site-color: #3a7afe;
+    --main-color: #ebeef6;
+    --active-color: #d4def7;
+    --bg-color: #ecedf0;
+    --second-color: #f1f1f1;
+    --third-color: #9fa7bd;
+    --fourth-color: #fff;
+    --main-bg-color: #004f88;
+    --second-bg-color: #1e2746;
+    --third-bg-color: #3a7afe;
+    --fourth-bg-color: #004f88;
+    --primary-color: #0088cc;
+    --success-color: #47a447;
+    --info-color: #5bc0de;
+    --warning-color: #ed9c28;
+    --danger-color: #d2322d;
+    --danger-hover-color: #f00e06;
+}
+
+body {
+    background-color: var(--main-color);
+}
+
+@media (max-width: 1024px) {
+    .row .box {
+        width: 48%;
+    }
+}
+
+@media(max-width: 768px) {
+    .row .box {
+        width: 98%;
+    }
+}
+
+@media (max-width: 540px) {
+    .table-sm-none {
+        display: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .table-md-none {
+        display: none;
+    }
+}
+
+@media (max-width: 960px) {
+    .table-lg-none {
+        display: none;
+    }
+}
+
+@media (max-width: 1140px) {
+    .table-xl-none {
+        display: none;
+    }
+}
 
 /* Inicio listar */
 
@@ -33,6 +100,7 @@
     background-color: var(--fourth-color);
     color: var(--fourth-bg-color);
     padding: 8px;
+    text-align: center;
 }
 
 
