@@ -8,34 +8,40 @@
     </head>
 
 <body>
-    <?php
+<?php
     
-        include_once '../../funcoesSelect/selects.php';
-        include_once 'user.php';
+include_once '../../funcoesSelect/selects.php';
+include_once 'user.php';
 
-        // Começo destruindo a sessão para garantir que não há nenhum dado ao criar o usuário
-        session_start();
+    // Começo destruindo a sessão para garantir que não há nenhum dado ao criar o usuário
+    session_start();
 
-        // Destroi todas as variáveis de sessão
-        $_SESSION = array();
-        
-        // Destroi a sessão
-        session_destroy();
+    // Destroi todas as variáveis de sessão
+    $_SESSION = array();
+            
+    // Destroi a sessão
+    session_destroy();
 
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-            if(!empty($formData['infoUser'])){
-                $createUser = new user();
-                $createUser->formData = $formData;
-                $cadastroUser = $createUser->inserirUser();
+    if(!empty($formData['infoUser'])){
+        $createUser = new user();
+        $createUser->formData = $formData;
+        $cadastroUser = $createUser->inserirUser();
     
-                if($cadastroUser){
-                    header("Location: ../../login/index.php");
-                    exit();
-                }else{
-                     echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
-                }
-            }
+        if($cadastroUser){
+            header("Location: ../../login/index.php");
+            exit();
+        }else{
+            echo "<p style='color: #f00;'>Erro: Usuário não cadastrado!</p>";
+        }
+    }
+
+
+    $consultaSelects = new selects();
+    $areas = $consultaSelects->listarDados('area', 'nomeArea');
+    $funcoes = $consultaSelects->listarDados('funcao', 'nomeFuncao');
+
     ?>
 
     <div class="container">
@@ -66,9 +72,6 @@
                 <select class="inputCadServ" name="funcaoServidor" id="funcaoServidor" required><br>
 
                 <?php
-                    $consultaFuncao = new selects();
-                    $funcoes = $consultaFuncao->listarFuncoes();
-
                     foreach ($funcoes as $funcao) {
                         echo '<option value="' . $funcao['idFuncao'] . '">' . $funcao['nomeFuncao'] . '</option>';
                     }
@@ -82,9 +85,6 @@
                 <select class="inputCadServ" name="areaServidor" id="areaServidor" required><br>
 
                 <?php
-                    $consultaArea = new selects();
-                    $areas = $consultaArea->listarAreas();
-
                     foreach ($areas as $area) {
                         echo '<option value="' . $area['Id'] . '">' . $area['nomeArea'] . '</option>';
                     }
