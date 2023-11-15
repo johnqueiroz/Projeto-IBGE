@@ -36,8 +36,7 @@ $dadosUsuario = $createUser->coletarDadosUser();
 $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
 
 $createEquip = new funcEquipamentos();
-$dadosEquipamento = $createEquip->coletarDadosEquipamentos();
-
+$dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
 ?>
 
 <body>
@@ -89,25 +88,28 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
                 <table class="table-list">
                     <thead class="list-head">
                         <tr>
-                            <th class="list-head-content">Patrimônio</th>
+                            <th class="list-head-content table-sm-none">Patrimônio</th>
                             <th class="list-head-content">Tipo</th>
-                            <th class="list-head-content">Área</th>                            
+                            <th class="list-head-content table-sm-none">Área</th>                            
                             <th class="list-head-content">Status</th>
                             <th class="list-head-content">Servidor</th>
-                            <th class="list-head-content">Data de movimentação</th>
-                            <th class="list-head-content"></th>
+                            <th class="list-head-content table-md-none">Data de movimentação</th>
+                            <th class="list-head-content">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="list-body">
                         <?php foreach ($dadosEquipamento as $equipamento): ?>
                             <tr>
-                                <td class="list-body-content"><?php echo $equipamento['patrimonio']; ?></td>
+                                <td class="list-body-content table-sm-none"><?php echo $equipamento['patrimonio']; ?></td>
                                 <td class="list-body-content"><?php echo $equipamento['tipoEquipamento']; ?></td>
-                                <td class="list-body-content"><?php echo $equipamento['nomeArea']; ?></td>
+                                <td class="list-body-content table-sm-none"><?php echo $equipamento['nomeArea']; ?></td>
                                 <td class="list-body-content"><?php echo $equipamento['status']; ?></td>
                                 <td class="list-body-content"><?php echo $equipamento['nomeServidor']; ?></td>
-                                <td class="list-body-content"><?php echo $equipamento['dataMovimentacao']; ?></td>
-                                <td class="list-body-content">Visualizar Editar Apagar</td>
+                                <td class="list-body-content table-md-none"><?php echo $equipamento['dataMovimentacao']; ?></td>
+                                <td class="list-body-content">                                
+                                <a href="../edicao/editarEqp.php?idEquipamento=<?php echo $equipamento['idEquipamento']; ?>">
+    <i class="icon fa-solid fa-pen-to-square fa-2xl"></i> </a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -117,7 +119,8 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentos();
     </div>
 
     <script src="../js/index.js"></script>
-    <script src="../js/inatividade.js"></script>       
+    <script src="../js/inatividade.js"></script> 
+    <script src="../js/listas.js"></script>       
 </body>
 
 
