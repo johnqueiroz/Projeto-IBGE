@@ -69,11 +69,12 @@ $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
     <div class="content">
         <!-- Inicio da Sidebar -->
         <div class="sidebar">
-            <a href="dashboard.php" class="sidebar-nav active"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="../auxiliar/dashboard.php" class="sidebar-nav active"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
-            <a href="#" class="sidebar-nav"><i class="icon fa-solid fa-users"></i><span>Listar</span></a>
+        <a href="../listas/listarEqp.php" class="sidebar-nav"><i class="icon fa-solid fa-rectangle-list"></i><span>Equipamentos</span></a>
 
-            <a href="#" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+        <a href="../auxiliar/logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+
 
         </div>
 
