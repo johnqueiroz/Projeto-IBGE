@@ -194,4 +194,38 @@ class funcEquipamentos extends Conexao{
         }
     }
 
+
+    public function CadastrarEqp($IdServidor): bool{
+
+        $this->conn = $this->conectarBD();
+        
+        $query_inserirEqp = "INSERT INTO `equipamentos` 
+        (`patrimonio`,
+        `numero_de_serie`,
+        `IdTipo`,
+        `IdArea`,
+        `IdStatus`,
+        `IdServidor`,
+        `dataMovimentacao`) VALUES
+        (:patrimonio, :numero_de_serie, :IdTipo, :IdArea, :IdStatus, :IdServidor, :dataMovimentacao)";
+        $cadastrarEqp = $this->conn->prepare($query_inserirEqp);
+
+        $cadastrarEqp->bindParam(':patrimonio', $this->formData['patrimonio'], PDO::PARAM_INT);
+        $cadastrarEqp->bindParam(':numero_de_serie', $this->formData['numero_de_serie'], PDO::PARAM_STR);
+        $cadastrarEqp->bindParam(':IdTipo', $this->formData['IdTipo'], PDO::PARAM_INT);
+        $cadastrarEqp->bindParam(':IdArea', $this->formData['IdArea'], PDO::PARAM_INT);
+        $cadastrarEqp->bindParam(':IdStatus', $this->formData['IdStatus'], PDO::PARAM_INT);
+        $cadastrarEqp->bindParam(':IdServidor', $IdServidor, PDO::PARAM_INT);
+        $dataFormatada = date("Y-m-d", strtotime(str_replace('/', '-', $this->formData['dataMovimentacao'])));
+        $cadastrarEqp->bindParam(':dataMovimentacao', $dataFormatada, PDO::PARAM_STR);
+    
+        $cadastrarEqp->execute();
+
+        if ($cadastrarEqp->rowCount()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

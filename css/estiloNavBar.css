@@ -397,3 +397,36 @@ body {
 
 
 /* Fim conteudo */
+
+
+.sidebar-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown-content-sidebar {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: var(--main-bg-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    color: var(--active-color);
+    
+}
+
+.sidebar-dropdown:hover .dropdown-content-sidebar {
+    display: block;
+}
+
+
+.dropdown-content-sidebar a {
+    display: block; /* Exibir links em uma nova linha */
+    text-decoration: none;
+    text-align:  center;
+}
+
+.dropdown-content-sidebar i{
+    padding-right: 15px;
+}
