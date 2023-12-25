@@ -21,22 +21,18 @@ if (!isset($_SESSION['userEmail'])) {
     <link rel="stylesheet" href="../css/estiloNavBar.css" type="text/css">
     <link rel="stylesheet" href="../css/listar.css" type="text/css">
 
-    <title>Lista de equipamentos</title>
+    <title>Lista de servidores</title>
     
 </head>
 
 <?php
 // Faz uso da classe de usuário para coletar os dados de usuário para utilizar o nome na página
 include_once '../Users/Cadastros/user.php';
-include_once '../equipamentos/funcEquipamentos.php';
 
 $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
 
-$_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
-
-$createEquip = new funcEquipamentos();
-$dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
+$dadosUsuarioLista =  $createUser->coletarUsers();
 ?>
 
 <body>
@@ -77,7 +73,7 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
             <a href="../auxiliar/dashboard.php" class="sidebar-nav"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
             <div class="sidebar-dropdown">
-                <a href="#" class="sidebar-nav active">
+                <a href="#" class="sidebar-nav">
                     <i class="icon fa-solid fa-rectangle-list"></i><span>Equipamentos</span>
                 </a>
                 <div class="dropdown-content-sidebar">
@@ -86,7 +82,7 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
                 </div>
             </div>
 
-            <a href="../listas/listarUser.php" class="sidebar-nav"><i class="icon fa-regular fa-id-badge"></i><span>Servidores</span></a>
+            <a href="../listas/listarUser.php" class="sidebar-nav active"><i class="icon fa-regular fa-id-badge"></i><span>Servidores</span></a>
 
             <a href="../auxiliar/logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
 
@@ -98,26 +94,28 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
                 <table class="table-list">
                     <thead class="list-head">
                         <tr>
-                            <th class="list-head-content table-sm-none">Patrimônio</th>
-                            <th class="list-head-content">Tipo</th>
-                            <th class="list-head-content table-sm-none">Área</th>                            
-                            <th class="list-head-content">Status</th>
-                            <th class="list-head-content">Servidor</th>
-                            <th class="list-head-content table-md-none">Data de movimentação</th>
-                            <th class="list-head-content">Ações</th>
+                            <th class="list-head-content table-sm-none">Nome</th>
+                            <th class="list-head-content">Siape</th>
+                            <th class="list-head-content table-sm-none">E-mail</th>                            
+                            <th class="list-head-content">Telefone</th>
+                            <th class="list-head-content">Função</th>
+                            <th class="list-head-content table-md-none">Administrador</th>
+                            <th class="list-head-content table-md-none">Área</th>
+                            <th class="list-head-content table-md-none">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="list-body">
-                        <?php foreach ($dadosEquipamento as $equipamento): ?>
+                        <?php foreach ($dadosUsuarioLista as $servidor): ?>
                             <tr>
-                                <td class="list-body-content table-sm-none"><?php echo $equipamento['patrimonio']; ?></td>
-                                <td class="list-body-content"><?php echo $equipamento['tipoEquipamento']; ?></td>
-                                <td class="list-body-content table-sm-none"><?php echo $equipamento['nomeArea']; ?></td>
-                                <td class="list-body-content"><?php echo $equipamento['status']; ?></td>
-                                <td class="list-body-content"><?php echo $equipamento['nomeServidor']; ?></td>
-                                <td class="list-body-content table-md-none"><?php echo $equipamento['dataMovimentacao']; ?></td>
+                                <td class="list-body-content table-sm-none"><?php echo $servidor['nomeServidor']; ?></td>
+                                <td class="list-body-content"><?php echo $servidor['siapeServidor']; ?></td>
+                                <td class="list-body-content table-sm-none"><?php echo $servidor['emailServidor']; ?></td>
+                                <td class="list-body-content"><?php echo $servidor['telefoneServidor']; ?></td>
+                                <td class="list-body-content"><?php echo $servidor['nomeFuncao']; ?></td>
+                                <td class="list-body-content"><?php if($servidor['administrador'] == 1){echo "Sim";}else{echo "Não";} ?></td>
+                                <td class="list-body-content table-md-none"><?php echo $servidor['nomeArea']; ?></td>
                                 <td class="list-body-content">                                
-                                <a href="../edicao/editarEqp.php?idEquipamento=<?php echo $equipamento['idEquipamento']; ?>">
+                                <a href="../edicao/editarUser.php?IdServidor=<?php echo $servidor['IdServidor']; ?>">
     <i class="icon fa-solid fa-pen-to-square fa-2xl"></i> </a>
                                 </td>
                             </tr>
