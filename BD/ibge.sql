@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/11/2023 às 22:14
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Tempo de geração: 25/12/2023 às 20:58
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,7 +66,12 @@ CREATE TABLE `equipamentos` (
 INSERT INTO `equipamentos` (`idEquipamento`, `patrimonio`, `numero_de_serie`, `IdTipo`, `IdArea`, `IdStatus`, `IdServidor`, `dataMovimentacao`) VALUES
 (1, 123456, 'ABC123', 3, 4, 3, 1, '2023-11-03'),
 (2, 123456, '123', 1, 4, 2, 2, '2023-11-15'),
-(3, 12, '4536746', 3, 6, 3, 2, '2023-11-14');
+(3, 12, '4536746', 3, 6, 3, 2, '2023-11-14'),
+(4, 5252, '525252', 1, 4, 1, 2, '2023-12-21'),
+(8, 2147483647, '456456456', 2, 5, 1, 2, '2023-12-21'),
+(9, 741, '369', 4, 4, 1, 2, '2023-12-21'),
+(10, 1, '0000000001', 2, 5, 1, 2, '2023-12-24'),
+(11, 147852369, '963258741', 2, 6, 2, 2, '2023-12-24');
 
 -- --------------------------------------------------------
 
@@ -146,7 +151,12 @@ INSERT INTO `tipoequipamento` (`idTipoEquipamento`, `tipo`) VALUES
 (1, 'Notebook Dell'),
 (2, 'Monitor AOC'),
 (3, 'Placa de vídeo NVIDEA'),
-(4, 'Mouse Logitech');
+(4, 'Mouse Logitech'),
+(5, 'Teclado Warrior'),
+(6, 'Teste'),
+(8, 'Teste2'),
+(9, 'Teste3'),
+(10, 'Teste4');
 
 -- --------------------------------------------------------
 
@@ -156,6 +166,7 @@ INSERT INTO `tipoequipamento` (`idTipoEquipamento`, `tipo`) VALUES
 
 CREATE TABLE `user` (
   `IdServidor` int(11) NOT NULL,
+  `administrador` int(11) NOT NULL,
   `nomeServidor` varchar(100) NOT NULL,
   `siapeServidor` int(11) NOT NULL,
   `emailServidor` varchar(100) NOT NULL,
@@ -169,9 +180,9 @@ CREATE TABLE `user` (
 -- Despejando dados para a tabela `user`
 --
 
-INSERT INTO `user` (`IdServidor`, `nomeServidor`, `siapeServidor`, `emailServidor`, `telefoneServidor`, `funcaoServidor`, `areaServidor`, `senha`) VALUES
-(1, 'John Emerson Ferreira Regis Filho', 34411188, 'johnemerson67@gmail.com', 83998341257, 1, 4, 'A4D6089C2DB866C9C76B652DF2A57A5F1AD4FC92A0BBF3C124258938FEC13A18140F8CC1BAA040FAFF7D637E5113672874DAB0767E6AD490A4832E52AA20663E'),
-(2, 'Adm', 123456, 'adm@adm.com', 0, 1, 5, '$2y$10$6Me2ARJsGdYqfAJ9sZU2X.suXoeAr08DqYZYftfnIfPx3KAJz1/R6');
+INSERT INTO `user` (`IdServidor`, `administrador`, `nomeServidor`, `siapeServidor`, `emailServidor`, `telefoneServidor`, `funcaoServidor`, `areaServidor`, `senha`) VALUES
+(1, 0, 'aaaaaaaaaaa', 11111, 'johnemerson67@gmail.com', 83996112880, 2, 6, 'A4D6089C2DB866C9C76B652DF2A57A5F1AD4FC92A0BBF3C124258938FEC13A18140F8CC1BAA040FAFF7D637E5113672874DAB0767E6AD490A4832E52AA20663E'),
+(2, 1, 'Adm', 123456, 'adm@adm.com', 0, 1, 5, '$2y$10$6Me2ARJsGdYqfAJ9sZU2X.suXoeAr08DqYZYftfnIfPx3KAJz1/R6');
 
 --
 -- Índices para tabelas despejadas
@@ -240,7 +251,7 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT de tabela `equipamentos`
 --
 ALTER TABLE `equipamentos`
-  MODIFY `idEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `funcao`
@@ -264,7 +275,7 @@ ALTER TABLE `tipoarea`
 -- AUTO_INCREMENT de tabela `tipoequipamento`
 --
 ALTER TABLE `tipoequipamento`
-  MODIFY `idTipoEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idTipoEquipamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `user`
