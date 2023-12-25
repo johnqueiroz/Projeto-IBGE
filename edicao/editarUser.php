@@ -9,8 +9,8 @@ if (!isset($_SESSION['userEmail'])) {
     exit();
 }
 // Se o ID do equipamento estiver definido na URL
-if (!isset($_GET['idEquipamento'])) {
-    header("Location: ../listas/listarEqp.php");
+if (!isset($_GET['IdServidor'])) {
+    header("Location: ../listas/listarUser.php");
     exit();
 }
 ?>
@@ -25,57 +25,49 @@ if (!isset($_GET['idEquipamento'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/estiloNavBar.css" type="text/css">
     <link rel="stylesheet" href="../css/estiloEditar.css" type="text/css">
-    <title>Edição de equipamento</title>
+    <title>Edição de servidor</title>
     
 </head>
 
 <?php
 // Faz uso da classe de usuário para coletar os dados de usuário para utilizar o nome na página
 include_once '../Users/Cadastros/user.php';
-include_once '../equipamentos/funcEquipamentos.php';
 include_once '../funcoesSelect/selects.php';
 
 $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
+$dadosUsuarioEditar = $createUser->coletarUserEditar($_GET['IdServidor']);
 
 $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
-$idEquipamento = $_GET['idEquipamento'];
-
-$createEquip = new funcEquipamentos();
-$dadosEquipamento = $createEquip->coletarDadosEquipamentosEdicao($idEquipamento);
 
 
 $consultaSelects = new selects();
 $areas = $consultaSelects->listarDados('area', 'nomeArea');
 $funcoes = $consultaSelects->listarDados('funcao', 'nomeFuncao');
-$tiposEqp = $consultaSelects->listarDados('tipoequipamento', 'tipo');
-$status = $consultaSelects->listarDados('statusequipamento', 'status');
 $servidores = $consultaSelects->listarDados('user', 'nomeServidor');
-
-
 
 $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-if(!empty($formData['editarEqp'])){
+if(!empty($formData['editarServ'])){
 
-    $createEquip->formData = $formData;
-    $editarEqp = $createEquip->atualizarEqp($idEquipamento);
+    $createUser->formData = $formData;
+    $editarServ = $createUser->atualizarServ($_GET['IdServidor']);
 
-    if($editarEqp){
-        header("Location: ../listas/listarEqp.php");
+    if($editarServ){
+        header("Location: ../listas/listarUser.php");
         exit();
     }else{
-        echo "<p style='color: #f00;'>Erro: Equipamento não atualizado!</p>";
+        echo "<p style='color: #f00;'>Erro: Servidor não atualizado!</p>";
     }
-}elseif(!empty($formData['deletarEqp'])){
-    $createEquip->formData = $formData;
-    $deletarEqp = $createEquip->deletarEqp($idEquipamento);
+}elseif(!empty($formData['deletarServ'])){
+    $createUser->formData = $formData;
+    $deletarServ = $createUser->deletarServ($_SESSION['IdServidor']);
 
-    if($deletarEqp){
-        header("Location: ../listas/listarEqp.php");
+    if($deletarServ){
+        header("Location: ../listas/listarUser.php");
         exit();
     }else{
-        echo "<p style='color: #f00;'>Erro: Equipamento não deletado!</p>";
+       echo "<script>alert('Erro: Servidor não deletado! O mesmo tem equipamentos relacionados ao seu nome.');</script>";
     }
 }
 
@@ -120,7 +112,7 @@ if(!empty($formData['editarEqp'])){
             <a href="../auxiliar/dashboard.php" class="sidebar-nav"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
             <div class="sidebar-dropdown">
-                <a href="#" class="sidebar-nav active">
+                <a href="#" class="sidebar-nav">
                     <i class="icon fa-solid fa-rectangle-list"></i><span>Equipamentos</span>
                 </a>
                 <div class="dropdown-content-sidebar">
@@ -129,7 +121,7 @@ if(!empty($formData['editarEqp'])){
                 </div>
             </div>
 
-            <a href="../listas/listarUser.php" class="sidebar-nav"><i class="icon fa-regular fa-id-badge"></i><span>Servidores</span></a>
+            <a href="../listas/listarUser.php" class="sidebar-nav active"><i class="icon fa-regular fa-id-badge"></i><span>Servidores</span></a>
 
             <a href="../auxiliar/logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
 
@@ -137,28 +129,35 @@ if(!empty($formData['editarEqp'])){
 
         <div class="conteinerForm">
 
-            <form action="" name="atualizarEqp" method= "POST" class="formField">
+            <form action="" name="atualizarServ" method= "POST" class="formField">
                 <div class="input-field">
-                    <input type="text" name="novoPatrimonio" class="input" value="<?php echo $dadosEquipamento['patrimonio']; ?>">
+                    <input type="text" name="novoNome" class="input" value="<?php echo $dadosUsuarioEditar['nomeServidor']; ?>">
                 </div>
 
                 <div class="input-field">
-                    <input type="text"name="novoNumeroDeSerie" class="input" value="<?php echo $dadosEquipamento['numeroSerie']; ?>">
+                    <input type="text"name="novoSiape" class="input" value="<?php echo $dadosUsuarioEditar['siapeServidor']; ?>">
                 </div>
 
                 <div class="input-field">
-                    <select class="input" name="novoIdTipo">
-                        <?php foreach ($tiposEqp as $tipo) { ?>
+                    <input type="text" name="novoEmail" class="input" value="<?php echo $dadosUsuarioEditar['emailServidor']; ?>">
+                </div>
+
+                <div class="input-field">
+                    <input type="text" name="novoTelefone" class="input" value="<?php echo $dadosUsuarioEditar['telefoneServidor']; ?>">
+                </div>
+
+                <div class="input-field">
+                    <select class="input" name="novoFuncao">
+                        <?php foreach ($funcoes as $item) { ?>
                             <?php
-                            $selected = ($tipo['idTipoEquipamento'] == $dadosEquipamento['tipo']) ? 'selected' : '';
+                            $selected = ($item['nomeFuncao'] == $dadosEquipamento['idFuncao']) ? 'selected' : '';
                             ?>
-                            <option value="<?php echo $tipo['idTipoEquipamento']; ?>" <?php echo $selected; ?>>
-                                <?php echo $tipo['tipo']; ?>
+                            <option value="<?php echo $item['idFuncao']; ?>" <?php echo $selected; ?>>
+                                <?php echo $item['nomeFuncao']; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
-
 
                 <div class="input-field">
                     <select class="input" name="novoIdArea">
@@ -173,47 +172,18 @@ if(!empty($formData['editarEqp'])){
                     </select>
                 </div>
 
-
                 <div class="input-field">
-                    <select class="input" name="novoIdStatus">
-                        <?php foreach ($status as $item) { ?>
-                            <?php
-                            $selected = ($item['idStatusEquipamento'] == $dadosEquipamento['IdStatus']) ? 'selected' : '';
-                            ?>
-                            <option value="<?php echo $item['idStatusEquipamento']; ?>" <?php echo $selected; ?>>
-                                <?php echo $item['status']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <div class="input-field">
-                    <select class="input" name="novoIdServidor">
-                        <?php foreach ($servidores as $servidor) { ?>
-                            <?php
-                            $selected = ($servidor['IdServidor'] == $dadosEquipamento['IdServidor']) ? 'selected' : '';
-                            ?>
-                            <option value="<?php echo $servidor['IdServidor']; ?>" <?php echo $selected; ?>>
-                                <?php echo $servidor['nomeServidor']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <div class="input-field">
-                    <input type="hidden" name="novaDataMovimentacao" class="input" value="<?php
-
-                        $dataAtual = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
-                        $dataFormatada = $dataAtual->format('d/m/Y');
-
-                        echo $dataFormatada;
-                    ?>">
+                <select name="novoAdministrador" class="input">
+                    <option value="<?php  $dadosUsuarioEditar['administrador']; ?>" selected><?php if($dadosUsuarioEditar['administrador'] == 1){echo "Sim";}else{echo "Não";} ?></option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
                 </div>
 
                 <div class="buttons">
-                    <button type="submit" id="editar" name="editarEqp" value="Editar"><b>Editar</b></button>
+                    <button type="submit" id="editar" name="editarServ" value="Editar"><b>Editar</b></button>
 
-                    <button type="submit" id="deletar" name="deletarEqp" value="Deletar"><b>Deletar</b></button>
+                    <button type="submit" id="deletar" name="deletarServ" value="Deletar"><b>Deletar</b></button>
                 </div>
 
             </form>
