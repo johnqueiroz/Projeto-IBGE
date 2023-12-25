@@ -25,5 +25,5 @@ window.matchMedia("(max-width: 768px)").matches ? sidebar.classList.remove("acti
 
 // Redirecionamento para encerrar a pág
 function encerrar() {
-    window.location.href = 'logout.php';
+    window.location.href = '../auxiliar/logout.php';
 }

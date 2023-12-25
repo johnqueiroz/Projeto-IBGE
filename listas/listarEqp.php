@@ -82,7 +82,7 @@ $dadosEquipamento = $createEquip->coletarDadosEquipamentosServidor();
                 </a>
                 <div class="dropdown-content-sidebar">
                     <a href="../listas/listarEqp.php"><i class="fa-solid fa-list"></i> Listagem Equipamentos</a>
-                    <a href="../cadastros/cadastrarEqp.php""> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>
+                    <a href="../cadastros/cadastros.php"> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>
                 </div>
             </div>
 

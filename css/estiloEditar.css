@@ -32,9 +32,9 @@ body {
 }
 
 .conteinerForm{
-    width: 50%;
+padding-top: 60px ;
+width: 100%;
    /* border: 1px solid black;*/
-    margin: auto;
 }
 
 .formField{
@@ -105,4 +105,46 @@ body {
 
 #cadastrar{
     background-color: var(--primary-color);
+}
+
+
+ul.nav-tabs {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+li.nav-item {
+    display: inline-block;
+}
+
+li.nav-item button {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+li.nav-item button.active {
+    background-color: #ddd;
+}
+
+.tab-content {
+    clear: both;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
 }
