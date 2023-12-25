@@ -87,6 +87,8 @@ $dadosEquipamento = $createEquip->coletarQuantEquipamentos();
                 </div>
             </div>
 
+            <a href="../listas/listarUser.php" class="sidebar-nav"><i class="icon fa-regular fa-id-badge"></i><span>Servidores</span></a>
+
             <a href="logout.php" class="sidebar-nav"><i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
 
         </div>

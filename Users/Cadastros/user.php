@@ -94,4 +94,124 @@ class user extends Conexao{
         }
     }
 
+
+    public function coletarUsers(){
+
+        $this->conn = $this->conectarBD();
+
+        $query = "SELECT user.nomeServidor,
+         user.IdServidor,
+         user.administrador,
+         user.siapeServidor,
+         user.emailServidor,
+         user.telefoneServidor, 
+         func.nomeFuncao, 
+         area.nomeArea 
+         FROM user 
+         INNER JOIN funcao AS func ON user.funcaoServidor = func.IdFuncao 
+         INNER JOIN area ON user.areaServidor = area.Id";
+        
+        
+        $prepararQuery = $this->conn->prepare($query);
+      
+        try{
+            $prepararQuery->execute();
+        }catch (PDOException $erro){
+            echo $erro->getMessage();
+        }finally{
+            return $prepararQuery->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+
+    public function coletarUserEditar($IdServidor){
+
+        $this->conn = $this->conectarBD();
+
+
+        $query = "SELECT user.nomeServidor,
+         user.IdServidor,
+         user.administrador,
+         user.siapeServidor,
+         user.emailServidor,
+         user.telefoneServidor, 
+         func.nomeFuncao, 
+         area.nomeArea 
+         FROM user 
+         INNER JOIN funcao AS func ON user.funcaoServidor = func.IdFuncao 
+         INNER JOIN area ON user.areaServidor = area.Id
+         WHERE user.IdServidor = :IdServidor";
+        
+        
+        $prepararQuery = $this->conn->prepare($query);
+
+        $prepararQuery->bindParam(':IdServidor', $IdServidor, PDO::PARAM_INT);
+      
+        try{
+            $prepararQuery->execute();
+        }catch (PDOException $erro){
+            echo $erro->getMessage();
+        }finally{
+            return $prepararQuery->fetch(PDO::FETCH_ASSOC);
+        }
+    }
+
+
+
+    public function atualizarServ($IdServidor){
+
+        $this->conn = $this->conectarBD();
+       
+        $query = "UPDATE user
+        SET
+            administrador = :novoAdministrador,
+            nomeServidor = :novoNome,
+            siapeServidor = :novoSiape,
+            emailServidor = :novoEmail,
+            telefoneServidor = :novoTelefone,
+            funcaoServidor = :novoFuncao,
+            areaServidor = :novoIdArea
+        WHERE
+            user.IdServidor = :IdServidor";
+
+        $prepararQuery = $this->conn->prepare($query);
+
+        $prepararQuery->bindParam(':novoAdministrador', $this->formData['novoAdministrador'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':novoNome',  $this->formData['novoNome'], PDO::PARAM_STR);
+        $prepararQuery->bindParam(':novoSiape',$this->formData['novoSiape'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':novoEmail', $this->formData['novoEmail'], PDO::PARAM_STR);
+        $prepararQuery->bindParam(':novoTelefone', $this->formData['novoTelefone'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':novoFuncao', $this->formData['novoFuncao'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':novoIdArea', $this->formData['novoIdArea'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':IdServidor', $IdServidor);
+
+        try{
+            $prepararQuery->execute();  // Execute a query para realmente deletar o registro
+            $rowCount = $prepararQuery->rowCount();
+            return $rowCount;  // Retorna o número de linhas afetadas pela deleção
+        }catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+
+    public function deletarServ($IdServidor){
+
+        $this->conn = $this->conectarBD();
+
+        $query = "DELETE FROM user WHERE `user`.`IdServidor` = :IdServidor";
+
+        $prepararQuery = $this->conn->prepare($query);
+       
+        $prepararQuery->bindParam(':IdServidor', $IdServidor, PDO::PARAM_INT);
+
+        try{
+            $prepararQuery->execute();  // Execute a query para realmente deletar o registro
+            $rowCount = $prepararQuery->rowCount();
+            return $rowCount;  // Retorna o número de linhas afetadas pela deleção
+        }catch (PDOException $erro){
+            $erro->getMessage();
+        }
+    }
+
 }
