@@ -13,6 +13,7 @@ if (!isset($_GET['idEquipamento'])) {
     header("Location: ../listas/listarEqp.php");
     exit();
 }
+
 ?>
 
 

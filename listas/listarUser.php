@@ -33,6 +33,7 @@ $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
 
 $dadosUsuarioLista =  $createUser->coletarUsers();
+
 ?>
 
 <body>
@@ -54,9 +55,11 @@ $dadosUsuarioLista =  $createUser->coletarUsers();
                 <img src="../images/profilePic.jpeg" alt="">
                 <b><?php echo $dadosUsuario['nomeServidor'];?></b>
                 <div class="dropdown-menu setting">
+                <a href="../perfil/perfil.php" style="text-decoration: none; color: inherit;">
                     <div class="item">
                         <span class="fa-solid fa-user"></span> Perfil
                     </div>
+                </a>
                     <div class="item" onclick="encerrar()">
                         <span class="fa-solid fa-arrow-right-from-bracket"></span> Sair
                     </div>
@@ -78,7 +81,14 @@ $dadosUsuarioLista =  $createUser->coletarUsers();
                 </a>
                 <div class="dropdown-content-sidebar">
                     <a href="../listas/listarEqp.php"><i class="fa-solid fa-list"></i> Listagem Equipamentos</a>
-                    <a href="../cadastros/cadastros.php"> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>
+                    <?php 
+                    $statusAdministrador  = $createUser->verificarAdministrador($_SESSION['userEmail']);
+
+                    if($statusAdministrador == 1){
+                       echo '<a href="../cadastros/cadastros.php"> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>';
+                    }    
+                    ?>
+                    
                 </div>
             </div>
 
@@ -101,7 +111,11 @@ $dadosUsuarioLista =  $createUser->coletarUsers();
                             <th class="list-head-content">Função</th>
                             <th class="list-head-content table-md-none">Administrador</th>
                             <th class="list-head-content table-md-none">Área</th>
-                            <th class="list-head-content table-md-none">Ações</th>
+                            <?php 
+                                if($statusAdministrador == 1){
+                                echo '<th class="list-head-content">Ações</th>';
+                                }    
+                            ?>
                         </tr>
                     </thead>
                     <tbody class="list-body">
@@ -114,10 +128,17 @@ $dadosUsuarioLista =  $createUser->coletarUsers();
                                 <td class="list-body-content"><?php echo $servidor['nomeFuncao']; ?></td>
                                 <td class="list-body-content"><?php if($servidor['administrador'] == 1){echo "Sim";}else{echo "Não";} ?></td>
                                 <td class="list-body-content table-md-none"><?php echo $servidor['nomeArea']; ?></td>
-                                <td class="list-body-content">                                
-                                <a href="../edicao/editarUser.php?IdServidor=<?php echo $servidor['IdServidor']; ?>">
-    <i class="icon fa-solid fa-pen-to-square fa-2xl"></i> </a>
-                                </td>
+                                <?php 
+                                    if ($statusAdministrador == 1) {
+                                        echo '<td class="list-body-content">                                
+                                                <a href="../edicao/editarUser.php?IdServidor=' . $servidor["IdServidor"] . '">
+                                                    <i class="icon fa-solid fa-pen-to-square fa-2xl"></i>
+                                                </a>
+                                            </td>';
+                                    }
+                                ?>
+
+                                
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

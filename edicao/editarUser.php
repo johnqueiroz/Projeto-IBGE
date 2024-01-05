@@ -37,6 +37,12 @@ include_once '../funcoesSelect/selects.php';
 $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
 $dadosUsuarioEditar = $createUser->coletarUserEditar($_GET['IdServidor']);
+$statusAdministrador  = $createUser->verificarAdministrador($_SESSION['userEmail']);
+
+if($statusAdministrador == 0){
+    header("Location: ../listas/listarUser.php");
+    exit();
+}
 
 $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
 
@@ -150,7 +156,7 @@ if(!empty($formData['editarServ'])){
                     <select class="input" name="novoFuncao">
                         <?php foreach ($funcoes as $item) { ?>
                             <?php
-                            $selected = ($item['nomeFuncao'] == $dadosEquipamento['idFuncao']) ? 'selected' : '';
+                            $selected = ($item['nomeFuncao'] == $dadosUsuarioEditar['idFuncao']) ? 'selected' : '';
                             ?>
                             <option value="<?php echo $item['idFuncao']; ?>" <?php echo $selected; ?>>
                                 <?php echo $item['nomeFuncao']; ?>
@@ -163,7 +169,7 @@ if(!empty($formData['editarServ'])){
                     <select class="input" name="novoIdArea">
                         <?php foreach ($areas as $area) { ?>
                             <?php
-                            $selected = ($area['Id'] == $dadosEquipamento['IdArea']) ? 'selected' : '';
+                            $selected = ($area['Id'] == $dadosUsuarioEditar['IdArea']) ? 'selected' : '';
                             ?>
                             <option value="<?php echo $area['Id']; ?>" <?php echo $selected; ?>>
                                 <?php echo $area['nomeArea']; ?>
