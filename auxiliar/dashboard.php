@@ -83,7 +83,13 @@ $dadosEquipamento = $createEquip->coletarQuantEquipamentos();
                 </a>
                 <div class="dropdown-content-sidebar">
                     <a href="../listas/listarEqp.php"><i class="fa-solid fa-list"></i> Listagem Equipamentos</a>
-                    <a href="../cadastros/cadastros.php"> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>
+                    <?php 
+                    $statusAdministrador  = $createUser->verificarAdministrador($_SESSION['userEmail']);
+
+                    if($statusAdministrador == 1){
+                       echo '<a href="../cadastros/cadastros.php"> <i class="icon fa-solid fa-plus"></i> Cadastrar Equipamento</a>';
+                    }    
+                    ?>
                 </div>
             </div>
 
