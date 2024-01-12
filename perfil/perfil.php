@@ -23,15 +23,64 @@ if (!isset($_SESSION['userEmail'])) {
 
     <style>
     
-
+    .input{
+        
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background: var(--active-color);
+    font-family: 'Ubuntu';
+    font-size: 14px;
+}
 
     #profile-container {
-            display: inline-block;
-        }
+        position: relative;
+    }
+
+    .conteinerForm {
+        margin-top: 20%; /* Ajuste conforme necessário */
+        text-align: center; /* Alinhe o formulário no centro (opcional) */
+        margin-right: 10%;
+    }
+
+    .formField {
+        display: flex;
+        flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+        justify-content: space-around; /* Espaçamento uniforme entre os itens */
+        align-items: center;
+    }
+
+    .input-field {
+        margin-bottom: 10px; /* Espaçamento entre as linhas */
+        padding-left: 50px;
+        flex-basis: 50%; /* Largura de cada campo, ajuste conforme necessário */
+    }
+
+    .buttons {
+        margin-top: 20px; /* Adicione margem acima do botão (ajuste conforme necessário) */
+        padding-left: 20px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    .buttons button{
+        padding: 10px 30px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        color: var(--active-color);
+        background-color: var(--primary-color);
+    }
 
         #profile-image {
             width: 200px;
             height: 200px;
+            margin-top: 10%;
+            margin-left: 30%;
             border-radius: 50%;
             object-fit: cover;
             transition: filter 0.3s ease-in-out;
@@ -39,8 +88,8 @@ if (!isset($_SESSION['userEmail'])) {
 
         #edit-icon {
             position: absolute;
-            top: 25%;
-            left: 25%;
+            top: 23%;
+            left: 80%;
             transform: translate(-50%, -50%);
             opacity: 0;
             font-size: 24px;
@@ -71,6 +120,21 @@ $createUser = new user();
 $dadosUsuario = $createUser->coletarDadosUser();
 
 $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
+
+$formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if(!empty($formData['atualizarUser'])){
+
+    $createUser->formData = $formData;
+    $atualizarUser = $createUser->atualizarUser($_SESSION['IdServidor']);
+
+    if($atualizarUser){
+        header("Location: perfil.php");
+        exit();
+    }else{
+        echo "<p style='color: #f00;'>Erro: Usuário não atualizado!</p>";
+    }
+}
 
 ?>
 
@@ -109,7 +173,7 @@ $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
     <div class="content">
         <!-- Inicio da Sidebar -->
         <div class="sidebar">
-            <a href="dashboard.php" class="sidebar-nav"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
+            <a href="../auxiliar/dashboard.php" class="sidebar-nav"><i class="icon fa-solid fa-house"></i><span>Dashboard</span></a>
 
             <div class="sidebar-dropdown">
                 <a href="#" class="sidebar-nav">
@@ -137,6 +201,33 @@ $_SESSION['IdServidor'] = $dadosUsuario['IdServidor'];
         <img id="profile-image" src="../images/profilePic.jpeg" alt="Foto de Perfil">
         <label for="file-input" id="edit-icon">✎</label>
         <input type="file" id="file-input" accept="image/*" onchange="showPreview(this)">
+    </div>
+
+    <div class="conteinerForm">
+
+            <form action="" name="atualizarUser" method= "POST" class="formField">
+                <div class="input-field">
+                    <input type="text" name="novoNome" class="input" value="<?php echo $dadosUsuario['nomeServidor'];?>">
+                </div>
+
+                <div class="input-field">
+                    <input type="text"name="siape" class="input" value="<?php echo $dadosUsuario['siapeServidor']; ?>" disabled>
+                </div>
+
+                <div class="input-field">
+                    <input type="text"name="novoEmail" class="input" value="<?php echo $dadosUsuario['emailServidor']; ?>">
+                </div>
+
+                <div class="input-field">
+                    <input type="text"name="novoTelefone" class="input" value="<?php echo $dadosUsuario['telefoneServidor']; ?>">
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" id="salvar" name="atualizarUser" value="Salvar"><b>Salvar</b></button>
+                </div>
+
+            </form>
+
     </div>
 
     <script>

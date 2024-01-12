@@ -74,7 +74,9 @@ class user extends Conexao{
 
         $query = "SELECT IdServidor, 
         nomeServidor, 
-        siapeServidor
+        siapeServidor, 
+        emailServidor,
+        telefoneServidor
         FROM user WHERE emailServidor = '$userEmail' LIMIT 1";
         
         
@@ -190,6 +192,39 @@ class user extends Conexao{
             echo $erro->getMessage();
         }
     }
+
+
+    public function atualizarUser($IdServidor){
+
+        $this->conn = $this->conectarBD();
+       
+        $query = "UPDATE user
+        SET
+            nomeServidor = :novoNome,
+            emailServidor = :novoEmail,
+            telefoneServidor = :novoTelefone
+        WHERE
+            user.IdServidor = :IdServidor";
+
+        $prepararQuery = $this->conn->prepare($query);
+
+        $prepararQuery->bindParam(':novoNome',  $this->formData['novoNome'], PDO::PARAM_STR);
+        $prepararQuery->bindParam(':novoEmail', $this->formData['novoEmail'], PDO::PARAM_STR);
+        $prepararQuery->bindParam(':novoTelefone', $this->formData['novoTelefone'], PDO::PARAM_INT);
+        $prepararQuery->bindParam(':IdServidor', $IdServidor);
+
+        try{
+            $prepararQuery->execute();  // Execute a query para realmente deletar o registro
+            $rowCount = $prepararQuery->rowCount();
+            return $rowCount;  // Retorna o número de linhas afetadas pela deleção
+        }catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+
+
+
 
 
     public function deletarServ($IdServidor){

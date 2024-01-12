@@ -59,9 +59,11 @@ $dadosEquipamento = $createEquip->coletarQuantEquipamentos();
                 <img src="../images/profilePic.jpeg" alt="">
                 <b><?php echo $dadosUsuario['nomeServidor'];?></b>
                 <div class="dropdown-menu setting">
+                <a href="../perfil/perfil.php" style="text-decoration: none; color: inherit;">
                     <div class="item">
                         <span class="fa-solid fa-user"></span> Perfil
                     </div>
+                </a>
                     <div class="item" onclick="encerrar()">
                         <span class="fa-solid fa-arrow-right-from-bracket"></span> Sair
                     </div>
