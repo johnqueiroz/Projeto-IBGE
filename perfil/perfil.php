@@ -23,8 +23,7 @@ if (!isset($_SESSION['userEmail'])) {
 
     <style>
     
-    .input{
-        
+.input{    
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
@@ -36,79 +35,89 @@ if (!isset($_SESSION['userEmail'])) {
     font-size: 14px;
 }
 
-    #profile-container {
-        position: relative;
-    }
+#profile-container {
+    position: relative;
+}
 
-    .conteinerForm {
-        margin-top: 20%; /* Ajuste conforme necessário */
-        text-align: center; /* Alinhe o formulário no centro (opcional) */
-        margin-right: 10%;
-    }
+.conteinerForm {
+    margin-top: 20%; /* Ajuste conforme necessário */
+    text-align: center; /* Alinhe o formulário no centro (opcional) */
+    margin-right: 10%;
+}
 
-    .formField {
-        display: flex;
-        flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-        justify-content: space-around; /* Espaçamento uniforme entre os itens */
-        align-items: center;
-    }
+.formField {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+    justify-content: space-around; /* Espaçamento uniforme entre os itens */
+    align-items: center;
+}
 
-    .input-field {
-        margin-bottom: 10px; /* Espaçamento entre as linhas */
-        padding-left: 50px;
-        flex-basis: 50%; /* Largura de cada campo, ajuste conforme necessário */
-    }
+.input-field {
+    margin-bottom: 10px; /* Espaçamento entre as linhas */
+    padding-left: 50px;
+    flex-basis: 50%; /* Largura de cada campo, ajuste conforme necessário */
+}
 
-    .buttons {
-        margin-top: 20px; /* Adicione margem acima do botão (ajuste conforme necessário) */
-        padding-left: 20px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-    }
+.buttons {
+    margin-top: 20px; /* Adicione margem acima do botão (ajuste conforme necessário) */
+    padding-left: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 
-    .buttons button{
-        padding: 10px 30px;
-        cursor: pointer;
-        border: none;
-        border-radius: 8px;
-        color: var(--active-color);
-        background-color: var(--primary-color);
-    }
+.buttons button{
+    padding: 10px 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    color: var(--active-color);
+    background-color: var(--primary-color);
+}
 
-        #profile-image {
-            width: 200px;
-            height: 200px;
-            margin-top: 10%;
-            margin-left: 30%;
-            border-radius: 50%;
-            object-fit: cover;
-            transition: filter 0.3s ease-in-out;
-        }
+#profile-image {
+    width: 200px;
+    height: 200px;
+    margin-top: 10%;
+    margin-left: 30%;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: filter 0.3s ease-in-out;
+    cursor: pointer;
+}
+.titulo{
+    margin-left: 5%;
+    color: #004f88;
+}
 
-        #edit-icon {
-            position: absolute;
-            top: 23%;
-            left: 80%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            font-size: 24px;
-            cursor: pointer;
-            user-select: none;
-            transition: opacity 0.3s ease-in-out;
-        }
+.salvar{
+    cursor: pointer;
+    margin-left: 85%;
+    margin-top: 10%;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: #004f88;
+    color: #ebeef6;
+}
+.close {
+    cursor: pointer;
+    margin-left: 95%;
+}
 
-        #profile-container:hover #profile-image {
-            filter: blur(5px);
-        }
+.avatar-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: 20%;
+    margin-top: 7%;
+}
 
-        #profile-container:hover #edit-icon {
-            opacity: 1;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
+.avatar-options img {
+    margin-left: 20%;
+    width: 10%;
+    cursor: pointer;
+}
     </style>
 </head>
 
@@ -197,10 +206,8 @@ if(!empty($formData['atualizarUser'])){
 
         </div>
 
-        <div id="profile-container">
-        <img id="profile-image" src="../images/profilePic.jpeg" alt="Foto de Perfil">
-        <label for="file-input" id="edit-icon">✎</label>
-        <input type="file" id="file-input" accept="image/*" onchange="showPreview(this)">
+    <div id="profile-container">
+        <img id="profile-image" onclick="abrirModal()" src="../images/profilePic.jpeg" alt="Foto de Perfil">
     </div>
 
     <div class="conteinerForm">
@@ -230,29 +237,42 @@ if(!empty($formData['atualizarUser'])){
 
     </div>
 
+    <dialog class="modal-lembrete">
+        <div class="avatares-dentro-modal">
+        <span class="close" onclick="fecharModal()">&times;</span>
+            <h2 class="titulo">Escolha um Avatar</h2>
+                    <!-- Adicione aqui a lista de avatares disponíveis -->
+                    <div class="avatar-options">
+                        <img src="../images/avatar1.png" alt="Avatar 1" onclick="selecionarAvatar(this)">
+                        <img src="../images/avatar2.png" alt="Avatar 2" onclick="selecionarAvatar(this)">
+                        <img src="../images/avatar3.png" alt="Avatar 3" onclick="selecionarAvatar(this)">
+                        <img src="../images/avatar4.png" alt="Avatar 4" onclick="selecionarAvatar(this)">
+                        <img src="../images/avatar5.png" alt="Avatar 5" onclick="selecionarAvatar(this)">
+                        <img src="../images/avatar6.png" alt="Avatar 6" onclick="selecionarAvatar(this)">
+                    <!-- Adicione mais imagens conforme necessário -->
+                    </div>
+            <button name="" class="salvar">Salvar</button>
+        </div>
+    </dialog>
+
+
+    <script src="../js/index.js"></script> 
+    <script src="../js/inatividade.js"></script>
     <script>
-        function showPreview(input) {
-            const file = input.files[0];
 
-            if (file) {
-                const reader = new FileReader();
+        const modal = document.querySelector("dialog");
 
-                reader.onload = function(e) {
-                    document.getElementById('profile-image').src = e.target.result;
-                };
-
-                reader.readAsDataURL(file);
-            }
+        function abrirModal() {
+        modal.showModal();
         }
 
-        function openFileInput() {
-            document.getElementById('file-input').click();
+        function fecharModal() {
+        var modal = document.querySelector('.modal-lembrete');
+        modal.close();
         }
     </script>
 
-
-    <script src="../js/index.js"></script>  
-    <script src="../js/inatividade.js"></script>      
+ 
 </body>
 
 
